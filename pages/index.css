@@ -1,0 +1,34 @@
+@import url(../vendor/normalize.css);
+@import url(../vendor/fonts/fonts.css);
+@import url(../blocks/page/page.css);
+/* header */
+@import url(../blocks/header/header.css);
+@import url(../blocks/header/__logo/header__logo.css);
+/* profile */
+@import url(../blocks/profile/profile.css);
+@import url(../blocks/profile/__avatar/profile__avatar.css);
+@import url(../blocks/profile/__info/profile__info.css);
+@import url(../blocks/profile/__name/profile__name.css);
+@import url(../blocks/profile/__job/profile__job.css);
+@import url(../blocks/profile/__info-editor/profile__info-editor.css);
+@import url(../blocks/profile/__add-button/profile__add-button.css);
+/* popup */
+@import url(../blocks/popup/popup.css);
+@import url(../blocks/popup/__container/popup__container.css);
+@import url(../blocks/popup/__overlay/popup__overlay.css);
+@import url(../blocks/popup/__paragraph/popup__paragraph.css);
+@import url(../blocks/popup/__forms/popup__forms.css);
+@import url(../blocks/popup/__form/popup__form.css);
+@import url(../blocks/popup/__save/popup__save.css);
+@import url(../blocks/popup/__exit/popup__exit.css);
+/* feed */
+@import url(../blocks/feed/feed.css);
+@import url(../blocks/feed/__elements/feed__elements.css);
+@import url(../blocks/feed/__element/feed__element.css);
+@import url(../blocks/feed/__element-photo/feed__element-photo.css);
+@import url(../blocks/feed/__element-pharagraph/feed__element-pharagraph.css);
+@import url(../blocks/feed/__element-like/feed__element-like.css);
+@import url(../blocks/feed/__element-footer/feed__element-footer.css);
+/* footer */
+@import url(../blocks/footer/footer.css);
+@import url(../blocks/footer/__paragraph/footer__paragraph.css);

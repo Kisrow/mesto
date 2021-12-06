@@ -1,0 +1,12 @@
+.profile__editor {
+  width: 24px;
+  height: 24px;
+  background-image: url(../../../images/profile-editor.png);
+  background-color: #000;
+  background-size: 10px;
+  background-position: center;
+  background-repeat: no-repeat;
+  cursor: pointer;
+  align-self: center;
+  border: 1px solid #fff;
+}

@@ -1,0 +1,9 @@
+.feed__element-footer {
+  background-color: #ffffff;
+  max-width: 282px;
+  border-radius: 0 0 10px 10px;
+  color: black;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}

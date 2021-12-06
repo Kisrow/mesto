@@ -1,0 +1,12 @@
+.page {
+  background-color: #000;
+  padding-top: 45px;
+  font-family: 'Inter', sans-serif;
+  box-sizing: border-box;
+}
+
+@media screen and (max-width: 530px) {
+  .page {
+    padding-top: 28px;
+  }
+}

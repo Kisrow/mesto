@@ -1,0 +1,11 @@
+.popup__form {
+  display: block;
+  margin: 30px auto 0;
+  padding: 0 0 11px;
+  width: 358px;
+  border:none;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 1.21;
+}

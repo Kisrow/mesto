@@ -1,0 +1,95 @@
+<!DOCTYPE HTML>
+<html lang="ru">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0'">
+  <title>Mesto</title>
+  <link rel="stylesheet" href="./pages/index.css">
+</head>
+
+<body>
+  <div class="page">
+    <header class="header">
+      <div class="header__logo"></div>
+    </header>
+
+    <main>
+      <section class="profile">
+        <img class="profile__avatar" src="./images/profile-image.png" alt="извините, браузер не выдержал всю мощь вашей фотографии">
+        <div>
+          <div class="profile__info">
+          <h1 class="profile__name">Жак-Ив Кусто</h1>
+          <button class="profile__editor" type="button"></button>
+          </div>
+          <p class="profile__job">Исследователь океана</p>
+        </div>
+        <button class="profile__add-button" type="button"></button>
+      </section>
+      <section class="popup">
+        <div class="popup__overlay"></div>
+        <div class="popup__container">
+          <button class="popup__exit"></button>
+          <p class="popup__paragraph">Редактировать профиль</p>
+          <form>
+            <input class="popup__form" type="text" placeholder="ФИО">
+            <input class="popup__form" type="text" placeholder="О себе">
+            <button class="popup__save" type="button">Сохранить</button>
+          </form>
+        </div>
+
+      </section>
+
+
+       <section class="feed">
+        <ul class="feed__elements">
+          <li class="feed__element">
+            <img class="feed__element-photo" src="./images/Karachayevsk (sq).jpg" alt="">
+            <div class="feed__element-footer">
+              <p class="feed__element-pharagraph">Карачаевск</p>
+              <div class="feed__element-like"><img src="./images/like.png" alt="Поставь лайк, сохрани человеку душевное равновесие"></div>
+            </div>
+          </li>
+          <li class="feed__element">
+            <img class="feed__element-photo" src="./images/Elbrus_view (sq).jpg" alt="">
+            <div class="feed__element-footer">
+              <p class="feed__element-pharagraph">Эльбрус</p>
+              <div class="feed__element-like"><img src="./images/like.png" alt="Поставь лайк, сохрани человеку душевное равновесие"></div>
+            </div>
+          </li>
+          <li class="feed__element">
+            <img class="feed__element-photo" src="./images/Donbay_Night(sq).jpg" alt="">
+            <div class="feed__element-footer">
+              <p class="feed__element-pharagraph">Ночной Домбай</p>
+              <div class="feed__element-like"><img src="./images/like.png" alt="Поставь лайк, сохрани человеку душевное равновесие"></div>
+            </div>
+          </li>
+          <li class="feed__element">
+            <img class="feed__element-photo" src="./images/Karachayevsk_river (sq).jpg" alt="">
+            <div class="feed__element-footer">
+              <p class="feed__element-pharagraph">Карачаевск</p>
+              <div class="feed__element-like"><img src="./images/like.png" alt="Поставь лайк, сохрани человеку душевное равновесие"></div>
+            </div>
+          </li>
+          <li class="feed__element">
+            <img class="feed__element-photo" src="./images/Donbay (sq).jpg" alt="">
+            <div class="feed__element-footer">
+              <p class="feed__element-pharagraph">Домбай</p>
+              <div class="feed__element-like"><img src="./images/like.png" alt="Поставь лайк, сохрани человеку душевное равновесие"></div>
+            </div>
+          </li>
+          <li class="feed__element">
+            <img class="feed__element-photo" src="./images/Elbrus_darktime (sq).jpg" alt="">
+            <div class="feed__element-footer">
+              <p class="feed__element-pharagraph">Вечерний Эльбрус</p>
+              <div class="feed__element-like"><img src="./images/like.png" alt="Поставь лайк, сохрани человеку душевное равновесие"></div>
+            </div>
+          </li>
+        </ul>
+      </section>
+    </main>
+    <footer class="footer">
+      <p class="footer__paragraph">© 2020 Mesto Russia</p>
+    </footer>
+  </div>
+</body>

@@ -1,0 +1,11 @@
+.feed__element-pharagraph {
+  display: inline;
+  margin: 0;
+  padding: 25px 15px 26px 21px;
+  font-size: 24px;
+  font-weight: 900;
+  line-height: 1.210416666666667;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+}

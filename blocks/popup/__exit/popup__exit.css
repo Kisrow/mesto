@@ -1,0 +1,11 @@
+.popup__exit {
+  width: 32px;
+  height: 32px;
+  background-image: url(../../../images/Close\ Icon.png);
+  background-size: cover;
+  background-color: #000;
+  position: absolute;
+  top: -40px;
+  right: -40px;
+  border: none;
+}
