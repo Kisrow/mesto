@@ -9,3 +9,9 @@
   font-weight: 400;
   line-height: 1.21;
 }
+
+@media screen and (max-width: 580px){
+  .popup__form {
+    width: 238px;
+  }
+}

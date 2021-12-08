@@ -10,3 +10,7 @@
   align-self: center;
   border: 1px solid #fff;
 }
+
+.profile__editor:hover {
+  opacity: .6;
+}

@@ -1,8 +1,15 @@
 .popup__container {
-  min-width: 430px;
+  width: 430px;
   position: absolute;
   z-index: 2;
   background-color: white;
   border-radius: 10px;
   box-shadow: 0px 0px 25px rgba(0, 0, 0, 0.15);
+}
+
+
+@media screen and (max-width: 580px) {
+  .popup__container {
+    width: 282px;
+  }
 }

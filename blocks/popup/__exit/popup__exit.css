@@ -3,9 +3,23 @@
   height: 32px;
   background-image: url(../../../images/Close\ Icon.png);
   background-size: cover;
-  background-color: #000;
+  background-color: rgba(0, 0, 0, 0);
   position: absolute;
   top: -40px;
   right: -40px;
   border: none;
+  cursor: pointer;
+}
+
+@media screen and (max-width: 580px) {
+  .popup__exit {
+    width: 20px;
+    height: 20px;
+    top: -36px;
+    right: 0;
+  }
+}
+
+.popup__exit:hover {
+  opacity: 0.6;
 }

@@ -21,6 +21,7 @@
 @import url(../blocks/popup/__form/popup__form.css);
 @import url(../blocks/popup/__save/popup__save.css);
 @import url(../blocks/popup/__exit/popup__exit.css);
+@import url(../blocks/popup/_on/popup_on.css);
 /* feed */
 @import url(../blocks/feed/feed.css);
 @import url(../blocks/feed/__elements/feed__elements.css);

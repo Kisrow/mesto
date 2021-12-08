@@ -5,3 +5,11 @@
   margin: 34px 64px 46px 36px;
   padding: 0;
 }
+
+@media screen and (max-width: 580px) {
+  .popup__paragraph {
+    font-size: 18px;
+    margin: 25px auto 75px;
+    text-align: center;
+  }
+}
