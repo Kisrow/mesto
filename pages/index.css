@@ -18,7 +18,7 @@
 @import url(../blocks/popup/__overlay/popup__overlay.css);
 @import url(../blocks/popup/__paragraph/popup__paragraph.css);
 @import url(../blocks/popup/__forms/popup__forms.css);
-@import url(../blocks/popup/__form/popup__form.css);
+@import url(../blocks/popup/__input/popup__input.css);
 @import url(../blocks/popup/__save/popup__save.css);
 @import url(../blocks/popup/__exit/popup__exit.css);
 @import url(../blocks/popup/_on/popup_on.css);

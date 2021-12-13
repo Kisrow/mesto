@@ -16,70 +16,69 @@
 
     <main>
       <section class="profile">
-        <img class="profile__avatar" src="./images/profile-image.png" alt="извините, браузер не выдержал всю мощь вашей фотографии">
+        <img class="profile__avatar" src="./images/profile-image.png"
+          alt="извините, браузер не выдержал всю мощь вашей фотографии">
         <div>
           <div class="profile__info">
-          <h1 class="profile__name">Жак-Ив Кусто</h1>
-          <button class="profile__editor" type="button"></button>
+            <h1 class="profile__name">Жак-Ив Кусто</h1>
+            <button aria-label="edit profile information"
+             class="profile__editor" type="button"></button>
           </div>
           <p class="profile__job">Исследователь океана</p>
         </div>
-        <button class="profile__add-button" type="button"></button>
+        <button aria-label="add next pic."
+         class="profile__add-button" type="button"></button>
       </section>
-      <div class="popup">
-        <div class="popup__overlay"></div>
-        <div class="popup__container">
-          <button class="popup__exit"></button>
-          <p class="popup__paragraph">Редактировать профиль</p>
-          <form class="popup__forms">
-            <input class="popup__form" id="name" type="text" placeholder="ФИО">
-            <input class="popup__form" id="job" type="text" placeholder="О себе">
-            <button class="popup__save" type="submit">Сохранить</button>
-          </form>
-        </div>
-      </div>
-       <section class="feed">
+      <section class="feed">
         <ul class="feed__elements">
           <li class="feed__element">
-            <img class="feed__element-photo" src="./images/Karachayevsk.jpg" alt="Город республиканского значения в Карачаево-Черкесской Республике">
+            <img class="feed__element-photo" src="./images/Karachayevsk.jpg"
+              alt="Город республиканского значения в Карачаево-Черкесской Республике">
             <div class="feed__element-footer">
-              <p class="feed__element-pharagraph">Карачаевск</p>
-              <div class="feed__element-like"><img src="./images/like.png" alt="Поставь лайк, сохрани человеку душевное равновесие"></div>
+              <h3 class="feed__element-pharagraph">Карачаевск</h3>
+              <button aria-label="if y like this pic, click on, everyone see it"
+              class="feed__element-like" type="button"></button>
             </div>
           </li>
           <li class="feed__element">
             <img class="feed__element-photo" src="./images/Elbrus_view.jpg" alt="Гора Эльбрус - захватывающий вид">
             <div class="feed__element-footer">
-              <p class="feed__element-pharagraph">Эльбрус</p>
-              <div class="feed__element-like"><img src="./images/like.png" alt="Поставь лайк, сохрани человеку душевное равновесие"></div>
+              <h3 class="feed__element-pharagraph">Эльбрус</h3>
+              <button aria-label="if y like this pic, click on, everyone see it"
+              class="feed__element-like" type="button"></button>
             </div>
           </li>
           <li class="feed__element">
             <img class="feed__element-photo" src="./images/Dombay_Night.jpg" alt="Ночной Домбай очень красив">
             <div class="feed__element-footer">
-              <p class="feed__element-pharagraph">Ночной Домбай</p>
-              <div class="feed__element-like"><img src="./images/like.png" alt="Поставь лайк, сохрани человеку душевное равновесие"></div>
+              <h3 class="feed__element-pharagraph">Ночной Домбай</h3>
+              <button aria-label="if y like this pic, click on, everyone see it"
+              class="feed__element-like" type="button"></button>
             </div>
           </li>
           <li class="feed__element">
-            <img class="feed__element-photo" src="./images/Karachayevsk_river.jpg" alt="Город республиканского значения в Карачаево-Черкесской Республике">
+            <img class="feed__element-photo" src="./images/Karachayevsk_river.jpg"
+              alt="Город республиканского значения в Карачаево-Черкесской Республике">
             <div class="feed__element-footer">
-              <p class="feed__element-pharagraph">Карачаевск</p>
-              <div class="feed__element-like"><img src="./images/like.png" alt="Поставь лайк, сохрани человеку душевное равновесие"></div>
+              <h3 class="feed__element-pharagraph">Карачаевск</h3>
+              <button aria-label="if y like this pic, click on, everyone see it"
+              class="feed__element-like" type="button"></button>
             </div>
           </li>
           <li class="feed__element">
             <img class="feed__element-photo" src="./images/Dombay.jpg" alt="Домбай, канатная дорога">
             <div class="feed__element-footer">
-              <p class="feed__element-pharagraph">Домбай</p>
-              <div class="feed__element-like"><img src="./images/like.png" alt="Поставь лайк, сохрани человеку душевное равновесие"></div>
+              <h3 class="feed__element-pharagraph">Домбай</h3>
+              <button aria-label="if y like this pic, click on, everyone see it"
+              class="feed__element-like" type="button"></button>
             </div>
           </li>
           <li class="feed__element">
             <img class="feed__element-photo" src="./images/Elbrus_darktime.jpg" alt="Вечерний Эльбрус прекрасен">
             <div class="feed__element-footer">
-              <p class="feed__element-pharagraph">Вечерний Эльбрус</p>
-              <div class="feed__element-like"><img src="./images/like.png" alt="Поставь лайк, сохрани человеку душевное равновесие"></div>
+              <h3 class="feed__element-pharagraph">Вечерний Эльбрус</h3>
+              <button aria-label="if y like this pic, click on, everyone see it"
+              class="feed__element-like" type="button"></button>
             </div>
           </li>
         </ul>
@@ -88,7 +87,21 @@
     <footer class="footer">
       <p class="footer__paragraph">© 2020 Mesto Russia</p>
     </footer>
+    <div class="popup">
+      <div class="popup__overlay"></div>
+      <div class="popup__container">
+        <button aria-label="close this modal"
+        class="popup__exit" type="button"></button>
+        <h2 class="popup__paragraph">Редактировать профиль</h2>
+        <form class="popup__forms" name="popup_form">
+          <input class="popup__input" id="name" type="text" name="name" placeholder="ФИО">
+          <input class="popup__input" id="job" type="text" name="job" placeholder="О себе">
+          <button class="popup__save" type="submit">Сохранить</button>
+        </form>
+      </div>
+    </div>
   </div>
-  <script src="./script/script.js" ></script>
+  <script src="./script/script.js"></script>
 </body>
+
 </html>
