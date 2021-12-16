@@ -2,7 +2,6 @@
   width: 100%;
   max-width: 430px;
   position: relative;
-  z-index: 2;
   background-color: white;
   border-radius: 10px;
   box-shadow: 0px 0px 25px rgba(0, 0, 0, 0.15);
@@ -13,4 +12,16 @@
   .popup__container {
     max-width: 282px;
   }
+}
+
+.popup__container::after {
+  content: '';
+  z-index: -1;
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  background-color: black;
+  opacity: 0.5;
 }

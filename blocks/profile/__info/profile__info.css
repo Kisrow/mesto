@@ -2,3 +2,9 @@
   display: flex;
   gap: 14px;
 }
+
+@media screen and (max-width: 530px) {
+  .profile__info {
+    gap: 10px;
+  }
+}
