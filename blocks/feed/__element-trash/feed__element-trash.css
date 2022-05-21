@@ -1,0 +1,16 @@
+.feed__element-trash {
+  background-image: url(../../../images/Trash.svg);
+  background-color: rgba(0, 0, 0, 0);
+  width: 18px;
+  height: 19px;
+  background-size: cover;
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  cursor: pointer;
+  border: none;
+}
+
+.feed__element-trash:hover {
+  opacity: .6;
+}

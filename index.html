@@ -15,6 +15,7 @@
     </header>
 
     <main>
+      <!--* секция отвечает за профиль: ФИО, род деятельности и аватарку-->
       <section class="profile">
         <img class="profile__avatar" src="./images/profile-image.jpg"
           alt="извините, браузер не выдержал всю мощь вашей фотографии">
@@ -29,74 +30,58 @@
         <button aria-label="add next pic."
          class="profile__add-button" type="button"></button>
       </section>
+      <!--* секция, отвечающая за ленту с карточками, -->
       <section class="feed">
         <ul class="feed__elements">
-          <li class="feed__element">
-            <img class="feed__element-photo" src="./images/Karachayevsk.jpg"
-              alt="Город республиканского значения в Карачаево-Черкесской Республике">
-            <div class="feed__element-footer">
-              <h3 class="feed__element-pharagraph">Карачаевск</h3>
-              <button aria-label="if y like this pic, click on, everyone see it"
-              class="feed__element-like" type="button"></button>
-            </div>
-          </li>
-          <li class="feed__element">
-            <img class="feed__element-photo" src="./images/Elbrus_view.jpg" alt="Гора Эльбрус - захватывающий вид">
-            <div class="feed__element-footer">
-              <h3 class="feed__element-pharagraph">Эльбрус</h3>
-              <button aria-label="if y like this pic, click on, everyone see it"
-              class="feed__element-like" type="button"></button>
-            </div>
-          </li>
-          <li class="feed__element">
-            <img class="feed__element-photo" src="./images/Dombay_Night.jpg" alt="Ночной Домбай очень красив">
-            <div class="feed__element-footer">
-              <h3 class="feed__element-pharagraph">Ночной Домбай</h3>
-              <button aria-label="if y like this pic, click on, everyone see it"
-              class="feed__element-like" type="button"></button>
-            </div>
-          </li>
-          <li class="feed__element">
-            <img class="feed__element-photo" src="./images/Karachayevsk_river.jpg"
-              alt="Город республиканского значения в Карачаево-Черкесской Республике">
-            <div class="feed__element-footer">
-              <h3 class="feed__element-pharagraph">Карачаевск</h3>
-              <button aria-label="if y like this pic, click on, everyone see it"
-              class="feed__element-like" type="button"></button>
-            </div>
-          </li>
-          <li class="feed__element">
-            <img class="feed__element-photo" src="./images/Dombay.jpg" alt="Домбай, канатная дорога">
-            <div class="feed__element-footer">
-              <h3 class="feed__element-pharagraph">Домбай</h3>
-              <button aria-label="if y like this pic, click on, everyone see it"
-              class="feed__element-like" type="button"></button>
-            </div>
-          </li>
-          <li class="feed__element">
-            <img class="feed__element-photo" src="./images/Elbrus_darktime.jpg" alt="Вечерний Эльбрус прекрасен">
-            <div class="feed__element-footer">
-              <h3 class="feed__element-pharagraph">Вечерний Эльбрус</h3>
-              <button aria-label="if y like this pic, click on, everyone see it"
-              class="feed__element-like" type="button"></button>
-            </div>
-          </li>
+          <!--* код для копирования карточки через JS-->
+          <template id = "feed__element">
+            <li class="feed__element">
+              <img class="feed__element-photo">
+              <button aria-label="trash" class="feed__element-trash" type="button"></button>
+              <div class="feed__element-footer">
+                <h3 class="feed__element-pharagraph"></h3>
+                <button aria-label="if u like this pic, click on, everyone see it"
+                class="feed__element-like" type="button"></button>
+              </div>
+            </li>
+          </template>
         </ul>
       </section>
     </main>
     <footer class="footer">
       <p class="footer__paragraph">© 2020 Mesto Russia</p>
     </footer>
-    <div class="popup">
-      <div class="popup__container">
+    <!--* попапы -->
+      <div class="popup edit-profile">
+        <div class="popup__container">
+          <button aria-label="close this modal"
+          class="popup__exit" type="button"></button>
+          <h2 class="popup__paragraph">Редактировать профиль</h2>
+          <form class="popup__forms" name="popup_form">
+            <input class="popup__input" id="name" placeholder="Введите имя" type="text" name="name">
+            <input class="popup__input" id="job" placeholder="Расскажите о себе" type="text" name="job">
+            <button class="popup__save" type="submit">Сохранить</button>
+          </form>
+        </div>
+      </div>
+      <div class="popup add-card">
+        <div class="popup__container">
+          <button aria-label="close this modal"
+          class="popup__exit" type="button"></button>
+          <h2 class="popup__paragraph">Новое место</h2>
+          <form class="popup__forms" name="popup_form">
+            <input class="popup__input" id="name" placeholder="Укажите название картинки" type="text" name="name">
+            <input class="popup__input" id="link" placeholder="Введите ссылку на картинку" type="text" name="job">
+            <button class="popup__save" type="submit">Сохранить</button>
+          </form>
+        </div>
+      </div>
+    <div class="popup viewer">
+      <div class="popup__wrapper">
         <button aria-label="close this modal"
         class="popup__exit" type="button"></button>
-        <h2 class="popup__paragraph">Редактировать профиль</h2>
-        <form class="popup__forms" name="popup_form">
-          <input class="popup__input" id="name" type="text" name="name" placeholder="ФИО">
-          <input class="popup__input" id="job" type="text" name="job" placeholder="О себе">
-          <button class="popup__save" type="submit">Сохранить</button>
-        </form>
+        <img class="popup__image">
+        <h2 class="popup__paragraph popup__paragraph_type_viewer"></h2>
       </div>
     </div>
   </div>
