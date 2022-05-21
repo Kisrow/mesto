@@ -23,7 +23,7 @@ const editProfileJobInput = editProfilePopup.querySelector('#job');
 const addCardPopup = document.querySelector('.add-card');
 const addCardСlosePopupButton = addCardPopup.querySelector('.popup__exit');
 const addCardSaveButton = addCardPopup.querySelector('.popup__save');
-const addCardNameInput = addCardPopup.querySelector('#name');
+const addCardNameInput = addCardPopup.querySelector('#nameCard');
 const addCardLinkInput = addCardPopup.querySelector('#link');
 
 //объявил окно просмотра фото и его содержимое
