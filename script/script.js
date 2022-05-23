@@ -10,21 +10,22 @@ const addPicButton = document.querySelector('.profile__add-button');
 const containerCards = document.querySelector('.feed__elements');
 
 //объявил содержимое темплейт карточки
-const templateCard = document.querySelector('#feed__element').content;
+const templateCard = document.querySelector('#feed-element').content;
+const templateItem = templateCard.querySelector('.feed__element');
 
 //объявил окно редактирования профиля и его содержимое
 const editProfilePopup = document.querySelector('.edit-profile');
 const editProfileСlosePopupButton = editProfilePopup.querySelector('.popup__exit');
-const editProfileSaveButton = editProfilePopup.querySelector('.popup__save');
 const editProfileNameInput = editProfilePopup.querySelector('#name');
 const editProfileJobInput = editProfilePopup.querySelector('#job');
+const editProfileForm = editProfilePopup.querySelector('.popup__forms');
 
 //объявил окно добавления новой карточки и его содержимое
 const addCardPopup = document.querySelector('.add-card');
 const addCardСlosePopupButton = addCardPopup.querySelector('.popup__exit');
-const addCardSaveButton = addCardPopup.querySelector('.popup__save');
 const addCardNameInput = addCardPopup.querySelector('#nameCard');
 const addCardLinkInput = addCardPopup.querySelector('#link');
+const addCardForm = addCardPopup.querySelector('.popup__forms');
 
 //объявил окно просмотра фото и его содержимое
 const viewerPopup = document.querySelector('.viewer');
@@ -58,17 +59,19 @@ const initialCards = [
   {
     name: 'Вечерний Эльбрус',
     link: './images/Elbrus_darktime.jpg'
-  },
+  }
 ];
 
 //функция просмотрщика
-const viewer = (card) => {
+const viewer = (cardName, cardLink) => {
   openPopup(viewerPopup);
-  viewerName.textContent = card.name;
-  viewerImage.src = card.link;
-  viewerImage.alt = card.name;
-  viewerСlosePopupButton.addEventListener('click', () => closePopup(viewerPopup));
-}
+  viewerName.textContent = cardName;
+  viewerImage.src = cardLink;
+  viewerImage.alt = cardName;
+};
+
+//закрыл просмотрщик
+viewerСlosePopupButton.addEventListener('click', () => closePopup(viewerPopup));
 
 //функция открытия попап
 const openPopup = element => {
@@ -80,21 +83,32 @@ const closePopup = element => {
   element.classList.remove('popup_on');
 }
 
-//функция отрисовки карточек
-const cloneCard = card => {
-  const cloneTemplateCard = templateCard.cloneNode(true);
+//функция создания карточки
+function cloneCard(cardName, cardLink) {
+  //шаблон и наполнение
+  const cloneTemplateCard = templateItem.cloneNode(true);
 
+  const nameCard = cloneTemplateCard.querySelector('.feed__element-pharagraph');
+  const imageCard = cloneTemplateCard.querySelector('.feed__element-photo');
+
+  nameCard.textContent = cardName;
+  imageCard.src = cardLink;
+  imageCard.alt = cardName;
+  //лайк
   cloneTemplateCard.querySelector('.feed__element-like').addEventListener('click', evt => evt.target.classList.toggle('feed__element-like_active'));
+  //удаление по клику на мусорку
   cloneTemplateCard.querySelector('.feed__element-trash').addEventListener('click', evt => evt.target.closest('.feed__element').remove());
-  cloneTemplateCard.querySelector('.feed__element-photo').addEventListener('click', () => viewer(card));
-  cloneTemplateCard.querySelector('.feed__element-pharagraph').textContent = card.name;
-  cloneTemplateCard.querySelector('.feed__element-photo').src = card.link;
-  cloneTemplateCard.querySelector('.feed__element-photo').alt = card.name;
+  //viewer
+  cloneTemplateCard.querySelector('.feed__element-photo').addEventListener('click', () => viewer(cardName, cardLink));
 
-  containerCards.prepend(cloneTemplateCard);
-}
+  return cloneTemplateCard
+};
 
-initialCards.forEach(card => cloneCard(card));
+//создание и отрисовка изначальных карточек
+initialCards.forEach(arrItem => {
+  containerCards.append(cloneCard(arrItem.name, arrItem.link));
+});
+
 
 //функция смени имени и информации о себе
 const formSubmitHandler = (evt) => {
@@ -109,28 +123,32 @@ const formSubmitHandler = (evt) => {
 //слушатель на редактор профиля
 editProfileButton.addEventListener('click', () => {
   openPopup(editProfilePopup);
-  editProfileСlosePopupButton.addEventListener('click', () => closePopup(editProfilePopup));
-  editProfileSaveButton.addEventListener('click', formSubmitHandler); //? почему evt.preventDefault(); не останавливает отправку формы, если вместо click поставить submit
+  editProfileNameInput.value = profileName.textContent;
+  editProfileJobInput.value = profileJob.textContent;
 });
+
+//закрыл редактор профиля
+editProfileСlosePopupButton.addEventListener('click', () => closePopup(editProfilePopup));
+
+//сохранил информацию из редактора профиля
+editProfileForm.addEventListener('submit', formSubmitHandler);
 
 //функция добавления карточки
 const addNewCard = (evt) => {
   evt.preventDefault();
-
-  initialCards.unshift(
-    {
-      name: addCardNameInput.value,
-      link: addCardLinkInput.value
-    });
-  cloneCard(initialCards[0]);
-  addCardNameInput.value = '';
-  addCardLinkInput.value= '';
+  const newCard = cloneCard(addCardNameInput.value, addCardLinkInput.value);
+  containerCards.prepend(newCard);
+  addCardForm.reset();
   closePopup(addCardPopup);
 }
 
 //слушатель на форму добавления карточки
 addPicButton.addEventListener('click', () => {
   openPopup(addCardPopup);
-  addCardСlosePopupButton.addEventListener('click', () => closePopup(addCardPopup));
-  addCardSaveButton.addEventListener('click', addNewCard);
 });
+
+//закрыл форму добавления карточки
+addCardСlosePopupButton.addEventListener('click', () => closePopup(addCardPopup));
+
+//добавил новую карточку
+addCardForm.addEventListener('submit', addNewCard);

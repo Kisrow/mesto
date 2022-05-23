@@ -22,29 +22,17 @@
         <div>
           <div class="profile__info">
             <h1 class="profile__name">Жак-Ив Кусто</h1>
-            <button aria-label="edit profile information"
+            <button aria-label="редактирование информации профиля"
              class="profile__editor" type="button"></button>
           </div>
           <p class="profile__job">Исследователь океана</p>
         </div>
-        <button aria-label="add next pic."
+        <button aria-label="добавить новую картинку"
          class="profile__add-button" type="button"></button>
       </section>
       <!--* секция, отвечающая за ленту с карточками, -->
       <section class="feed">
         <ul class="feed__elements">
-          <!--* код для копирования карточки через JS-->
-          <template id = "feed__element">
-            <li class="feed__element">
-              <img class="feed__element-photo">
-              <button aria-label="trash" class="feed__element-trash" type="button"></button>
-              <div class="feed__element-footer">
-                <h3 class="feed__element-pharagraph"></h3>
-                <button aria-label="if u like this pic, click on, everyone see it"
-                class="feed__element-like" type="button"></button>
-              </div>
-            </li>
-          </template>
         </ul>
       </section>
     </main>
@@ -54,7 +42,7 @@
     <!--* попапы -->
       <div class="popup edit-profile">
         <div class="popup__container">
-          <button aria-label="close this modal"
+          <button aria-label="закрыть всплывающее окно"
           class="popup__exit" type="button"></button>
           <h2 class="popup__paragraph">Редактировать профиль</h2>
           <form class="popup__forms" name="popup_form">
@@ -66,7 +54,7 @@
       </div>
       <div class="popup add-card">
         <div class="popup__container">
-          <button aria-label="close this modal"
+          <button aria-label="закрыть всплывающее окно"
           class="popup__exit" type="button"></button>
           <h2 class="popup__paragraph">Новое место</h2>
           <form class="popup__forms" name="popup_form">
@@ -78,12 +66,24 @@
       </div>
     <div class="popup viewer">
       <div class="popup__wrapper">
-        <button aria-label="close this modal"
+        <button aria-label="закрыть всплывающее окно"
         class="popup__exit" type="button"></button>
         <img class="popup__image">
         <h2 class="popup__paragraph popup__paragraph_type_viewer"></h2>
       </div>
     </div>
+     <!--* код для копирования карточки через JS-->
+     <template id = "feed-element">
+      <li class="feed__element">
+        <img class="feed__element-photo">
+        <button aria-label="удаление карточки" class="feed__element-trash" type="button"></button>
+        <div class="feed__element-footer">
+          <h3 class="feed__element-pharagraph"></h3>
+          <button aria-label="поставить фотографии лайк"
+          class="feed__element-like" type="button"></button>
+        </div>
+      </li>
+    </template>
   </div>
   <script src="./script/script.js"></script>
 </body>
