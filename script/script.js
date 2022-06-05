@@ -18,14 +18,14 @@ const editProfilePopup = document.querySelector('.edit-profile');
 const editProfileСlosePopupButton = editProfilePopup.querySelector('.popup__exit');
 const editProfileNameInput = editProfilePopup.querySelector('#name-input');
 const editProfileJobInput = editProfilePopup.querySelector('#job-input');
-const editProfileForm = editProfilePopup.querySelector(enableValidation.formSelector);
+const editProfileForm = editProfilePopup.querySelector('.popup__forms');
 
 //объявил окно добавления новой карточки и его содержимое
 const addCardPopup = document.querySelector('.add-card');
 const addCardСlosePopupButton = addCardPopup.querySelector('.popup__exit');
 const addCardNameInput = addCardPopup.querySelector('#nameCard-input');
 const addCardLinkInput = addCardPopup.querySelector('#link-input');
-const addCardForm = addCardPopup.querySelector(enableValidation.formSelector);
+const addCardForm = addCardPopup.querySelector('.popup__forms');
 
 //объявил окно просмотра фото и его содержимое
 const viewerPopup = document.querySelector('.viewer');
@@ -135,13 +135,15 @@ initialCards.forEach(arrItem => {
 
 
 //функция смени имени и информации о себе
-const formSubmitHandler = (evt) => {
+const handleProfileFormSubmit = (evt) => {
   evt.preventDefault();
 
   profileName.textContent = editProfileNameInput.value;
   profileJob.textContent = editProfileJobInput.value;
 
   closePopup(editProfilePopup);
+
+  buttonDesabled(editProfilePopup);
 };
 
 //слушатель на редактор профиля
@@ -155,8 +157,14 @@ editProfileButton.addEventListener('click', () => {
 editProfileСlosePopupButton.addEventListener('click', () => closePopup(editProfilePopup));
 
 //сохранил информацию из редактора профиля
-editProfileForm.addEventListener('submit', formSubmitHandler);
+editProfileForm.addEventListener('submit', handleProfileFormSubmit);
 
+// функция деактивации кнопки формы
+const buttonDesabled = (formElement) => {
+  const buttonElement = formElement.querySelector(enableValidation.submitButtonSelector);
+  buttonElement.setAttribute('disabled',true);
+  buttonElement.classList.add(enableValidation.inactiveButtonClass);
+}
 //функция добавления карточки
 const addNewCard = (evt) => {
   evt.preventDefault();
@@ -164,6 +172,7 @@ const addNewCard = (evt) => {
   containerCards.prepend(newCard);
   addCardForm.reset();
   closePopup(addCardPopup);
+  buttonDesabled(addCardPopup);
 }
 
 //слушатель на форму добавления карточки
