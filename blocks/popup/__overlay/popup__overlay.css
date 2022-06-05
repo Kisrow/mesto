@@ -1,10 +1,4 @@
-.popup__wrapper {
-  max-width: 75vw;
-  max-height: 75vh;
-  position: relative;
-}
-
-/* .popup__wrapper::after {
+.popup__overlay {
   content: '';
   z-index: -1;
   position: fixed;
@@ -14,4 +8,4 @@
   right: 0;
   background-color: black;
   opacity: 0.5;
-} */
+}
