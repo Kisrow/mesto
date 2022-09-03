@@ -1,3 +1,15 @@
+import Card from './Card.js';
+import { FormValidator } from './FormValidator.js';
+
+const enableValidation = {
+  formSelector: '.popup__forms', //контейнер с инпутами
+  inputSelector: '.popup__input', //инпут
+  submitButtonSelector: '.popup__button', //кнопка создать/сохранить
+  inactiveButtonClass: 'popup__button_disabled',  //класс для деактивации кнопки
+  inputErrorClass: 'popup__input_type_error', //красная граница инпута при ошибки
+  errorClass: 'popup__input-error_visible' //показывает ошибку
+};
+
 //объявил информационные строки страницы
 const profileName = document.querySelector('.profile__name');
 const profileJob = document.querySelector('.profile__job');
@@ -5,13 +17,6 @@ const profileJob = document.querySelector('.profile__job');
 //объявил кнопки страницы
 const editProfileButton = document.querySelector('.profile__editor');
 const addPicButton = document.querySelector('.profile__add-button');
-
-//объявил контейнер для карточек
-const containerCards = document.querySelector('.feed__elements');
-
-//объявил содержимое темплейт карточки
-const templateCard = document.querySelector('#feed-element').content;
-const templateItem = templateCard.querySelector('.feed__element');
 
 //объявил окно редактирования профиля и его содержимое
 const editProfilePopup = document.querySelector('.edit-profile');
@@ -28,9 +33,9 @@ const addCardLinkInput = addCardPopup.querySelector('#link-input');
 const addCardForm = addCardPopup.querySelector('.popup__forms');
 
 //объявил окно просмотра фото и его содержимое
-const viewerPopup = document.querySelector('.viewer');
-const viewerName = viewerPopup.querySelector('.popup__paragraph_type_viewer');
-const viewerImage = viewerPopup.querySelector('.popup__image');
+export const viewerPopup = document.querySelector('.viewer');
+export const viewerName = viewerPopup.querySelector('.popup__paragraph_type_viewer');
+export const viewerImage = viewerPopup.querySelector('.popup__image');
 const viewerСlosePopupButton = viewerPopup.querySelector('.popup__exit');
 
 
@@ -62,19 +67,11 @@ const initialCards = [
   }
 ];
 
-//функция просмотрщика
-const viewer = (cardName, cardLink) => {
-  openPopup(viewerPopup);
-  viewerName.textContent = cardName;
-  viewerImage.src = cardLink;
-  viewerImage.alt = cardName;
-};
-
 //закрыл просмотрщик
 viewerСlosePopupButton.addEventListener('click', () => closePopup(viewerPopup));
 
 //функция открытия попап
-const openPopup = element => {
+export const openPopup = element => {
   element.classList.add('popup_on');
   document.addEventListener('keydown', closePopupByEsc);
 };
@@ -93,10 +90,12 @@ const closePopupByEsc = (evt) =>{
   };
 };
 
+//поиск подложек
 const editProfileOverlay = document.querySelector('.edit-profile-overlay');
 const addCardOverlay = document.querySelector('.add-card-overlay');
 const viewerOverlay = document.querySelector('.viewer-overlay');
 
+//закрытие попапов при клике на подложку
 editProfileOverlay.addEventListener('click', () => {
   closePopup(editProfilePopup);
 });
@@ -106,33 +105,6 @@ addCardOverlay.addEventListener('click', () => {
 viewerOverlay.addEventListener('click', () => {
   closePopup(viewerPopup);
 });
-
-//функция создания карточки
-function cloneCard(cardName, cardLink) {
-  //шаблон и наполнение
-  const cloneTemplateCard = templateItem.cloneNode(true);
-
-  const nameCard = cloneTemplateCard.querySelector('.feed__element-pharagraph');
-  const imageCard = cloneTemplateCard.querySelector('.feed__element-photo');
-
-  nameCard.textContent = cardName;
-  imageCard.src = cardLink;
-  imageCard.alt = cardName;
-  //лайк
-  cloneTemplateCard.querySelector('.feed__element-like').addEventListener('click', evt => evt.target.classList.toggle('feed__element-like_active'));
-  //удаление по клику на мусорку
-  cloneTemplateCard.querySelector('.feed__element-trash').addEventListener('click', evt => evt.target.closest('.feed__element').remove());
-  //viewer
-  cloneTemplateCard.querySelector('.feed__element-photo').addEventListener('click', () => viewer(cardName, cardLink));
-
-  return cloneTemplateCard
-};
-
-//создание и отрисовка изначальных карточек
-initialCards.forEach(arrItem => {
-  containerCards.append(cloneCard(arrItem.name, arrItem.link));
-});
-
 
 //функция смени имени и информации о себе
 const handleProfileFormSubmit = (evt) => {
@@ -168,11 +140,13 @@ const buttonDesabled = (formElement) => {
 //функция добавления карточки
 const addNewCard = (evt) => {
   evt.preventDefault();
-  const newCard = cloneCard(addCardNameInput.value, addCardLinkInput.value);
-  containerCards.prepend(newCard);
+  const newCard = new Card({name: addCardNameInput.value, link: addCardLinkInput.value}, '.card-template_type_default');
+  const newCardElement = newCard.generateCard();
+
+  document.querySelector('.feed__elements').prepend(newCardElement);
   addCardForm.reset();
-  closePopup(addCardPopup);
   buttonDesabled(addCardPopup);
+  closePopup(addCardPopup);
 }
 
 //слушатель на форму добавления карточки
@@ -188,3 +162,15 @@ addCardСlosePopupButton.addEventListener('click', () => {
 
 //добавил новую карточку
 addCardForm.addEventListener('submit', addNewCard);
+
+initialCards.forEach((item) => {
+  const card = new Card(item, '.card-template_type_default');
+  const cardElement = card.generateCard();
+
+  document.querySelector('.feed__elements').append(cardElement);
+})
+
+const addCardPopupValidation = new FormValidator(enableValidation, addCardPopup);
+addCardPopupValidation.enableValidationFunction();
+const editProfilePopupValidation = new FormValidator(enableValidation, editProfilePopup);
+editProfilePopupValidation.enableValidationFunction();
