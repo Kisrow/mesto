@@ -1,10 +1,10 @@
-import {openPopup, viewerPopup, viewerName, viewerImage} from "./index.js";
 // возвращает заполненную рабочую карточку
 export default class Card {
-  constructor(data, templateSelector) {
+  constructor(data, templateSelector, handleOpenPopupViewer) {
     this._name = data.name;
     this._link = data.link;
     this._selector = templateSelector;
+    this._handleOpenPopupViewer = handleOpenPopupViewer;
   }
 
   //возвращает разметку карточки
@@ -24,39 +24,36 @@ export default class Card {
     this._setEventListeners();
 
     this._element.querySelector('.feed__element-pharagraph').textContent = this._name;
-    this._element.querySelector('.feed__element-photo').src = this._link;
+    this._cardPhoto.src = this._link;
+    this._cardPhoto.alt = this._name;
 
     return this._element;
   }
 
   //ставит слушатели
   _setEventListeners() {
-    this._element.querySelector('.feed__element-like').addEventListener('click', () => {
+    this._likeButton = this._element.querySelector('.feed__element-like');
+    this._likeButton.addEventListener('click', () => {
       this._like();
     });
-    this._element.querySelector('.feed__element-trash').addEventListener('click', () => {
+    this._trashButton = this._element.querySelector('.feed__element-trash');
+    this._trashButton.addEventListener('click', () => {
       this._removeCard();
     });
-    this._element.querySelector('.feed__element-photo').addEventListener('click', () => {
-      this._viewer();
+    this._cardPhoto = this._element.querySelector('.feed__element-photo');
+    this._cardPhoto.addEventListener('click', () => {
+      this._handleOpenPopupViewer(this._name, this._link);
     })
   }
 
   //ставит или убирает лайк на фото при нажатии на сердце
   _like() {
-    this._element.querySelector('.feed__element-like').classList.toggle('feed__element-like_active');
+    this._likeButton.classList.toggle('feed__element-like_active');
   }
 
   //удаляет карточку при нажатие на мусорку
   _removeCard() {
-    this._element.querySelector('.feed__element-trash').closest('.feed__element').remove();
+    this._trashButton.closest('.feed__element').remove();
   }
 
-  //режим просмотра фото карточки
-  _viewer() {
-    openPopup(viewerPopup);
-    viewerName.textContent = this._name;
-    viewerImage.src = this._link;
-    viewerImage.alt = this._name;
-  }
 }

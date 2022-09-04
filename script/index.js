@@ -1,7 +1,7 @@
 import Card from './Card.js';
 import { FormValidator } from './FormValidator.js';
 
-const enableValidation = {
+const objectForValidate = {
   formSelector: '.popup__forms', //контейнер с инпутами
   inputSelector: '.popup__input', //инпут
   submitButtonSelector: '.popup__button', //кнопка создать/сохранить
@@ -13,6 +13,9 @@ const enableValidation = {
 //объявил информационные строки страницы
 const profileName = document.querySelector('.profile__name');
 const profileJob = document.querySelector('.profile__job');
+
+//объявил контейнер для карточек
+const cardsContainer = document.querySelector('.feed__elements');
 
 //объявил кнопки страницы
 const editProfileButton = document.querySelector('.profile__editor');
@@ -33,9 +36,9 @@ const addCardLinkInput = addCardPopup.querySelector('#link-input');
 const addCardForm = addCardPopup.querySelector('.popup__forms');
 
 //объявил окно просмотра фото и его содержимое
-export const viewerPopup = document.querySelector('.viewer');
-export const viewerName = viewerPopup.querySelector('.popup__paragraph_type_viewer');
-export const viewerImage = viewerPopup.querySelector('.popup__image');
+const viewerPopup = document.querySelector('.viewer');
+const viewerName = viewerPopup.querySelector('.popup__paragraph_type_viewer');
+const viewerImage = viewerPopup.querySelector('.popup__image');
 const viewerСlosePopupButton = viewerPopup.querySelector('.popup__exit');
 
 
@@ -67,11 +70,23 @@ const initialCards = [
   }
 ];
 
+const handleOpenPopupViewer = (name, link) => {
+  viewerName.textContent = name;
+  viewerImage.src = link;
+  viewerImage.alt = name;
+  openPopup(viewerPopup);
+}
+
 //закрыл просмотрщик
-viewerСlosePopupButton.addEventListener('click', () => closePopup(viewerPopup));
+viewerСlosePopupButton.addEventListener('click', () => {
+  closePopup(viewerPopup);
+  viewerName.textContent = '';
+  viewerImage.src = '';
+  viewerImage.alt = '';
+});
 
 //функция открытия попап
-export const openPopup = element => {
+const openPopup = element => {
   element.classList.add('popup_on');
   document.addEventListener('keydown', closePopupByEsc);
 };
@@ -85,8 +100,8 @@ const closePopup = element => {
 //функция закрытия попап через esc
 const closePopupByEsc = (evt) =>{
  if (evt.key === 'Escape') {
-  const openedPopupElement = document.querySelector('.popup_on');
-  closePopup(openedPopupElement);
+    const openedPopupElement = document.querySelector('.popup_on');
+    closePopup(openedPopupElement);
   };
 };
 
@@ -107,22 +122,20 @@ viewerOverlay.addEventListener('click', () => {
 });
 
 //функция смени имени и информации о себе
-const handleProfileFormSubmit = (evt) => {
-  evt.preventDefault();
-
+const handleProfileFormSubmit = () => {
   profileName.textContent = editProfileNameInput.value;
   profileJob.textContent = editProfileJobInput.value;
 
   closePopup(editProfilePopup);
 
-  buttonDesabled(editProfilePopup);
+  disableButton(editProfilePopup);
 };
 
 //слушатель на редактор профиля
 editProfileButton.addEventListener('click', () => {
-  openPopup(editProfilePopup);
   editProfileNameInput.value = profileName.textContent;
   editProfileJobInput.value = profileJob.textContent;
+  openPopup(editProfilePopup);
 });
 
 //закрыл редактор профиля
@@ -132,20 +145,19 @@ editProfileСlosePopupButton.addEventListener('click', () => closePopup(editProf
 editProfileForm.addEventListener('submit', handleProfileFormSubmit);
 
 // функция деактивации кнопки формы
-const buttonDesabled = (formElement) => {
-  const buttonElement = formElement.querySelector(enableValidation.submitButtonSelector);
+const disableButton = (formElement) => {
+  const buttonElement = formElement.querySelector(objectForValidate.submitButtonSelector);
   buttonElement.setAttribute('disabled',true);
-  buttonElement.classList.add(enableValidation.inactiveButtonClass);
+  buttonElement.classList.add(objectForValidate.inactiveButtonClass);
 }
 //функция добавления карточки
-const addNewCard = (evt) => {
-  evt.preventDefault();
-  const newCard = new Card({name: addCardNameInput.value, link: addCardLinkInput.value}, '.card-template_type_default');
+const addNewCard = () => {
+  const newCard = new Card({name: addCardNameInput.value, link: addCardLinkInput.value}, '.card-template_type_default', handleOpenPopupViewer);
   const newCardElement = newCard.generateCard();
 
-  document.querySelector('.feed__elements').prepend(newCardElement);
+  cardsContainer.prepend(newCardElement);
   addCardForm.reset();
-  buttonDesabled(addCardPopup);
+  disableButton(addCardPopup);
   closePopup(addCardPopup);
 }
 
@@ -164,13 +176,13 @@ addCardСlosePopupButton.addEventListener('click', () => {
 addCardForm.addEventListener('submit', addNewCard);
 
 initialCards.forEach((item) => {
-  const card = new Card(item, '.card-template_type_default');
+  const card = new Card(item, '.card-template_type_default', handleOpenPopupViewer);
   const cardElement = card.generateCard();
 
-  document.querySelector('.feed__elements').append(cardElement);
+  cardsContainer.append(cardElement);
 })
 
-const addCardPopupValidation = new FormValidator(enableValidation, addCardPopup);
-addCardPopupValidation.enableValidationFunction();
-const editProfilePopupValidation = new FormValidator(enableValidation, editProfilePopup);
-editProfilePopupValidation.enableValidationFunction();
+const addCardPopupValidation = new FormValidator(objectForValidate, addCardForm);
+addCardPopupValidation.enableValidation();
+const editProfilePopupValidation = new FormValidator(objectForValidate, editProfileForm);
+editProfilePopupValidation.enableValidation();
