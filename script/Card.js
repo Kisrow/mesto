@@ -53,7 +53,7 @@ export default class Card {
 
   //удаляет карточку при нажатие на мусорку
   _removeCard() {
-    this._trashButton.closest('.feed__element').remove();
+    this._element.remove();
   }
 
 }

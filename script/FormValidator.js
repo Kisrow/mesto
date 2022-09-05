@@ -1,4 +1,4 @@
-export class FormValidator {
+export default class FormValidator {
   constructor(validationObject, formElement) {
     this._formElement = formElement;
     this._inputSelector = validationObject.inputSelector;
@@ -37,10 +37,10 @@ export class FormValidator {
 
  //функция добавляющая обработчики всем формам
   enableValidation = () => {
-  this._formElement.addEventListener('submit', (evt) => {
-    evt.preventDefault();
-  });
-  this._setEventListener();
+    this._formElement.addEventListener('submit', (evt) => {
+      evt.preventDefault();
+    });
+    this._setEventListener();
  }
 
   //функция добавляющая обработчики всем полям формы
@@ -60,8 +60,7 @@ export class FormValidator {
   //функция управляющая активностью кнопки отправки формы
   _toggleButtonState = () => {
     if (this._hasInvalidInput()) {
-      this._buttonElement.classList.add(this._inactiveButtonClass);
-      this._buttonElement.setAttribute('disabled',true);
+      this.disableButton();
     } else {
       this._buttonElement.classList.remove(this._inactiveButtonClass);
       this._buttonElement.removeAttribute('disabled');
@@ -73,5 +72,10 @@ export class FormValidator {
     return this._inputsList.some((inputElement) => {
       return !inputElement.validity.valid;
     })
+  }
+  //публичный метод блокировки кнопки
+  disableButton = () => {
+    this._buttonElement.classList.add(this._inactiveButtonClass);
+    this._buttonElement.setAttribute('disabled',true);
   }
 }

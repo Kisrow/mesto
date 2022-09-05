@@ -1,5 +1,5 @@
 import Card from './Card.js';
-import { FormValidator } from './FormValidator.js';
+import FormValidator from './FormValidator.js';
 
 const objectForValidate = {
   formSelector: '.popup__forms', //контейнер с инпутами
@@ -127,8 +127,7 @@ const handleProfileFormSubmit = () => {
   profileJob.textContent = editProfileJobInput.value;
 
   closePopup(editProfilePopup);
-
-  disableButton(editProfilePopup);
+  editProfilePopupValidation.disableButton();
 };
 
 //слушатель на редактор профиля
@@ -144,20 +143,21 @@ editProfileСlosePopupButton.addEventListener('click', () => closePopup(editProf
 //сохранил информацию из редактора профиля
 editProfileForm.addEventListener('submit', handleProfileFormSubmit);
 
-// функция деактивации кнопки формы
-const disableButton = (formElement) => {
-  const buttonElement = formElement.querySelector(objectForValidate.submitButtonSelector);
-  buttonElement.setAttribute('disabled',true);
-  buttonElement.classList.add(objectForValidate.inactiveButtonClass);
-}
-//функция добавления карточки
-const addNewCard = () => {
-  const newCard = new Card({name: addCardNameInput.value, link: addCardLinkInput.value}, '.card-template_type_default', handleOpenPopupViewer);
+//Функция создания карточки по классу Card
+const createCard = (data, templateSelector, handleOpenPopupViewer) => {
+  const newCard = new Card(data, templateSelector, handleOpenPopupViewer);
   const newCardElement = newCard.generateCard();
+
+  return newCardElement;
+}
+
+//функция добавления карточки по клику на кнопку создать
+const addNewCard = () => {
+  const newCardElement = createCard({name: addCardNameInput.value, link: addCardLinkInput.value}, '.card-template_type_default', handleOpenPopupViewer);
 
   cardsContainer.prepend(newCardElement);
   addCardForm.reset();
-  disableButton(addCardPopup);
+  addCardPopupValidation.disableButton();
   closePopup(addCardPopup);
 }
 
@@ -176,8 +176,7 @@ addCardСlosePopupButton.addEventListener('click', () => {
 addCardForm.addEventListener('submit', addNewCard);
 
 initialCards.forEach((item) => {
-  const card = new Card(item, '.card-template_type_default', handleOpenPopupViewer);
-  const cardElement = card.generateCard();
+  const cardElement = createCard(item, '.card-template_type_default', handleOpenPopupViewer);
 
   cardsContainer.append(cardElement);
 })

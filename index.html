@@ -61,7 +61,7 @@
           class="popup__exit" type="button"></button>
           <h2 class="popup__paragraph">Новое место</h2>
           <form class="popup__forms" name="popup_form" novalidate>
-            <input class="popup__input" id="nameCard-input" placeholder="Укажите название картинки" type="text" name="nameCard" required>
+            <input class="popup__input" id="nameCard-input" placeholder="Укажите название картинки" type="text" name="nameCard" required minlength="2" maxlength="30">
             <span class="nameCard-input-error popup__input-error"></span>
             <input class="popup__input" id="link-input" placeholder="Введите ссылку на картинку" type="url" name="link" required>
             <span class="link-input-error popup__input-error"></span>
