@@ -54,6 +54,7 @@ export default class Card {
   //удаляет карточку при нажатие на мусорку
   _removeCard() {
     this._element.remove();
+    this._element = null; //remove удаляет только разметку из html, объект карточки остается в памяти приложения и потребляет ресурсы - зануляем
   }
 
 }

@@ -4,7 +4,6 @@ export default class PopupWithImage extends Popup {
 
   constructor(popupSelector) {
     super(popupSelector);
-    this._popup = document.querySelector(popupSelector);
     this._name = this._popup.querySelector('.popup__paragraph_type_viewer');
     this._image = this._popup.querySelector('.popup__image');
   }
