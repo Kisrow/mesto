@@ -1,10 +1,10 @@
 // возвращает заполненную рабочую карточку
 export default class Card {
-  constructor(data, templateSelector, handleOpenPopupViewer) {
+  constructor(data, templateSelector, {handleCardClick}) {
     this._name = data.name;
     this._link = data.link;
     this._selector = templateSelector;
-    this._handleOpenPopupViewer = handleOpenPopupViewer;
+    this._handleCardClick = handleCardClick;
   }
 
   //возвращает разметку карточки
@@ -42,7 +42,7 @@ export default class Card {
     });
     this._cardPhoto = this._element.querySelector('.feed__element-photo');
     this._cardPhoto.addEventListener('click', () => {
-      this._handleOpenPopupViewer(this._name, this._link);
+      this._handleCardClick(this._name, this._link);
     })
   }
 

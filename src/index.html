@@ -5,7 +5,6 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0'">
   <title>Mesto</title>
-  <link rel="stylesheet" href="./pages/index.css">
 </head>
 
 <body class="root">
@@ -17,7 +16,7 @@
     <main>
       <!--* секция отвечает за профиль: ФИО, род деятельности и аватарку-->
       <section class="profile">
-        <img class="profile__avatar" src="./images/profile-image.jpg"
+        <img class="profile__avatar" src="<%=require('./images/profile-image.jpg')%>"
           alt="извините, браузер не выдержал всю мощь вашей фотографии">
         <div>
           <div class="profile__info">
@@ -37,7 +36,7 @@
       </section>
     </main>
     <footer class="footer">
-      <p class="footer__paragraph">© 2020 Mesto Russia</p>
+      <p class="footer__paragraph">© 2022 Mesto Russia</p>
     </footer>
     <!--* попапы -->
       <div class="popup edit-profile">
