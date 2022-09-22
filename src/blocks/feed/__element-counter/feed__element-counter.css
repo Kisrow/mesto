@@ -1,0 +1,10 @@
+.feed__element-counter{
+  margin: 0;
+  padding-left: 5.5px;
+  font-size: 13px;
+  font-weight: 400;
+  line-height: 1.230769230769231;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+}

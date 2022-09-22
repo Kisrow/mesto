@@ -32,4 +32,19 @@
       })
     });
   }
+
+  //Если запрос прошёл успешно, сервер вернёт ответ с объектом новой карточки
+  postNewCard(inputValues) {
+    return fetch('https://mesto.nomoreparties.co/v1/cohort-50/cards', {
+      method: 'POST',
+      headers: {
+        authorization: 'fe432b22-c689-4f0c-8db5-8b9370263f9d',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        name: inputValues.name,
+        link: inputValues.link
+      })
+    });
+  }
 }

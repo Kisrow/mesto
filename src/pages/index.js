@@ -36,6 +36,7 @@ const editProfileForm = editProfilePopup.querySelector('.popup__forms');
 const addCardPopup = document.querySelector('.add-card');
 const addCardForm = addCardPopup.querySelector('.popup__forms');
 
+//элементы на странице содержащие имя и информацию пользователя
 const userName = document.querySelector('.profile__name');
 const userAbout = document.querySelector('.profile__job');
 
@@ -66,8 +67,10 @@ const userAbout = document.querySelector('.profile__job');
 //     link: nightElbrus
 //   }
 // ];
+//экземпляр - работа с сервером
+const api = new Api('https://nomoreparties.co/v1/cohort-50/users/me');
 
-const api = new Api('https://nomoreparties.co/v1/cohort-50/users/me')
+//получает имя и информацию пользователя и ставит соответствующее место на странице
 api.getUserInfo()
   .then(res =>  res.json())
   .then(res => {
@@ -97,8 +100,11 @@ const popupWithFormProfile = new PopupWithForm({ handleFormSubmit: (inputValues)
 
 //экземпляр - попап с формой, который добавляет новую карточку
 const popupWithFormAddCard = new PopupWithForm({ handleFormSubmit: (inputValues) => {
-  const newCardElement = createCard({name: inputValues.nameCard, link: inputValues.link}, '.card-template_type_default');
-  cardListSection.addItem(newCardElement);
+  api.postNewCard({name: inputValues.nameCard, link: inputValues.link})
+    .then(res => res.json())
+    .then(res => {
+      cardListSection.renderItems([{name: res.name, link: res.link}]);
+    })
 }}, '.add-card');
 
 //ставит слушатели на попапы
@@ -116,21 +122,19 @@ const createCard = (data, templateSelector) => {
   return newCardElement;
 }
 
+//экземпляр - отвечает за отрисовку
+const cardListSection = new Section({
+  renderer: item => {
+    const card = createCard(item, '.card-template_type_default');
+    cardListSection.addItem(card)
+  }
+},'.feed__elements');
+
 //добавил исходные карточки с сервера
 api.getCards()
+  .then(res => res.json())
   .then(res => {
-    return res.json();
-  })
-  .then(res => {
-    const cardListSection = new Section({
-      items: res,
-      renderer: item => {
-        const card = createCard(item, '.card-template_type_default');
-        cardListSection.addItem(card)
-      }
-    },'.feed__elements');
-
-    cardListSection.renderItems();
+    cardListSection.renderItems(res.reverse());
   })
 
 //слушатель на форму добавления карточки
@@ -145,7 +149,7 @@ editProfileButton.addEventListener('click', () => {
   popupWithFormProfile.open();
 });
 
-
+//экземпляры и инициализация валидации форм попапов
 const addCardPopupValidation = new FormValidator(objectForValidate, addCardForm);
 addCardPopupValidation.enableValidation();
 const editProfilePopupValidation = new FormValidator(objectForValidate, editProfileForm);

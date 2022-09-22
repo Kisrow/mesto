@@ -37,6 +37,7 @@
 @import url(../blocks/feed/__element-photo/feed__element-photo.css);
 @import url(../blocks/feed/__element-pharagraph/feed__element-pharagraph.css);
 @import url(../blocks/feed/__element-like/feed__element-like.css);
+@import url(../blocks/feed/__element-counter/feed__element-counter.css);
 @import url(../blocks/feed/__element-like/_active/feed__element-like_active.css);
 @import url(../blocks/feed/__element-footer/feed__element-footer.css);
 @import url(../blocks/feed/__element-trash/feed__element-trash.css);
