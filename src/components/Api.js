@@ -1,0 +1,35 @@
+  export default class Api {
+  constructor(url) {
+    this._url = url;
+  }
+
+  getUserInfo() {
+    return fetch(this._url, {
+      headers: {
+        authorization: 'fe432b22-c689-4f0c-8db5-8b9370263f9d'
+      }
+    });
+  }
+
+  getCards() {
+    return fetch('https://mesto.nomoreparties.co/v1/cohort-50/cards', {
+      headers: {
+        authorization: 'fe432b22-c689-4f0c-8db5-8b9370263f9d'
+      }
+    });
+  }
+
+  patchEditProfileInformation(inputValues) {
+    return fetch('https://mesto.nomoreparties.co/v1/cohort-50/users/me', {
+      method: 'PATCH',
+      headers: {
+        authorization: 'fe432b22-c689-4f0c-8db5-8b9370263f9d',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        name: inputValues.name,
+        about: inputValues.job
+      })
+    });
+  }
+}

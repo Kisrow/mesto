@@ -4,6 +4,7 @@ export default class UserInfo {
     this._userInfoElement = document.querySelector(userData.infoSelector);
   }
 
+  //собирает имя и о себе со страницы
   getUserInfo() {
     const userInfo = {
       userName: this._userNameElement.textContent,
@@ -11,7 +12,7 @@ export default class UserInfo {
     }
     return userInfo
   }
-
+  //изменяет на странице имя и о себе на значения в массиве на входе
   setUserInfo(newUserData) {
     this._userNameElement.textContent = newUserData.userName;
     this._userInfoElement.textContent = newUserData.userInfo;

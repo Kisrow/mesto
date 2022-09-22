@@ -12,7 +12,8 @@ import FormValidator from '../components/FormValidator.js';
 import Section from '../components/Section.js';
 import PopupWithImage from '../components/PopupWithImage.js';
 import PopupWithForm from '../components/PopupWithForm.js';
-import UserInfo from '../components/UserInfo.js';
+// import UserInfo from '../components/UserInfo.js';
+import Api from '../components/Api.js';
 
 const objectForValidate = {
   formSelector: '.popup__forms', //контейнер с инпутами
@@ -35,50 +36,63 @@ const editProfileForm = editProfilePopup.querySelector('.popup__forms');
 const addCardPopup = document.querySelector('.add-card');
 const addCardForm = addCardPopup.querySelector('.popup__forms');
 
+const userName = document.querySelector('.profile__name');
+const userAbout = document.querySelector('.profile__job');
 
 //массив с данными карточек
-const initialCards = [
-  {
-    name: 'Карачаевск',
-    link: karachasevsk
-  },
-  {
-    name: 'Эльбрус',
-    link: elbrus
-  },
-  {
-    name: 'Ночной Домбай',
-    link: nightDombai
-  },
-  {
-    name: 'Карачаевск',
-    link: karachasevsk2
-  },
-  {
-    name: 'Домбай',
-    link: dombai
-  },
-  {
-    name: 'Вечерний Эльбрус',
-    link: nightElbrus
-  }
-];
+// const initialCards = [
+//   {
+//     name: 'Карачаевск',
+//     link: karachasevsk
+//   },
+//   {
+//     name: 'Эльбрус',
+//     link: elbrus
+//   },
+//   {
+//     name: 'Ночной Домбай',
+//     link: nightDombai
+//   },
+//   {
+//     name: 'Карачаевск',
+//     link: karachasevsk2
+//   },
+//   {
+//     name: 'Домбай',
+//     link: dombai
+//   },
+//   {
+//     name: 'Вечерний Эльбрус',
+//     link: nightElbrus
+//   }
+// ];
+
+const api = new Api('https://nomoreparties.co/v1/cohort-50/users/me')
+api.getUserInfo()
+  .then(res =>  res.json())
+  .then(res => {
+    userName.textContent = res.name;
+    userAbout.textContent = res.about;
+  });
 
 //экземпляр - управлениет отображением информации о пользователе на странице
-const userInfo = new UserInfo({
-  nameSelector: '.profile__name',
-  infoSelector: '.profile__job'
-});
+// const userInfo = new UserInfo({
+//   nameSelector: '.profile__name',
+//   infoSelector: '.profile__job'
+// });
 
 //экземпляр попап для просмотра фото
 const popupWithImage = new PopupWithImage('.viewer');
 
 //экземпляр - попап с формой, меняет имя и общую инфу
 const popupWithFormProfile = new PopupWithForm({ handleFormSubmit: (inputValues) => {
-  userInfo.setUserInfo({
-    userName: inputValues.name,
-    userInfo: inputValues.job
-  })
+  api.patchEditProfileInformation(inputValues)
+    .then(res => res.json())
+    .then(res => {
+      userName.textContent = res.name;
+      userAbout.textContent = res.about;
+    })
+    .catch(err => console.log(`Ошибка ${err}`));
 }}, '.edit-profile');
 
 //экземпляр - попап с формой, который добавляет новую карточку
@@ -102,16 +116,22 @@ const createCard = (data, templateSelector) => {
   return newCardElement;
 }
 
-//добавил исходные карточки
-const cardListSection = new Section({
-  items: initialCards,
-  renderer: item => {
-    const card = createCard(item, '.card-template_type_default');
-    cardListSection.addItem(card)
-  }
-},'.feed__elements');
+//добавил исходные карточки с сервера
+api.getCards()
+  .then(res => {
+    return res.json();
+  })
+  .then(res => {
+    const cardListSection = new Section({
+      items: res,
+      renderer: item => {
+        const card = createCard(item, '.card-template_type_default');
+        cardListSection.addItem(card)
+      }
+    },'.feed__elements');
 
-cardListSection.renderItems();
+    cardListSection.renderItems();
+  })
 
 //слушатель на форму добавления карточки
 addPicButton.addEventListener('click', () => {
