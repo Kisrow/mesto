@@ -1,11 +1,11 @@
 import './index.css';
 
-import karachasevsk from '../images/Karachayevsk.jpg';
-import elbrus from '../images/Elbrus_view.jpg';
-import nightDombai from '../images/Dombay_Night.jpg';
-import karachasevsk2 from '../images/Karachayevsk_river.jpg'
-import dombai from '../images/Dombay.jpg'
-import nightElbrus from '../images/Elbrus_darktime.jpg'
+// import karachasevsk from '../images/Karachayevsk.jpg';
+// import elbrus from '../images/Elbrus_view.jpg';
+// import nightDombai from '../images/Dombay_Night.jpg';
+// import karachasevsk2 from '../images/Karachayevsk_river.jpg'
+// import dombai from '../images/Dombay.jpg'
+// import nightElbrus from '../images/Elbrus_darktime.jpg'
 
 import Card from '../components/Card';
 import FormValidator from '../components/FormValidator.js';
@@ -70,10 +70,11 @@ const userAbout = document.querySelector('.profile__job');
 //экземпляр - работа с сервером
 const api = new Api('https://nomoreparties.co/v1/cohort-50/users/me');
 
-//получает имя и информацию пользователя и ставит соответствующее место на странице
+//получает имя и информацию пользователя и ставит на соответствующее место на странице
 api.getUserInfo()
   .then(res =>  res.json())
   .then(res => {
+    console.log(res);
     userName.textContent = res.name;
     userAbout.textContent = res.about;
   });
@@ -105,6 +106,7 @@ const popupWithFormAddCard = new PopupWithForm({ handleFormSubmit: (inputValues)
     .then(res => {
       cardListSection.renderItems([{name: res.name, link: res.link}]);
     })
+    .catch(err => console.log(`Ошибка ${err}`));
 }}, '.add-card');
 
 //ставит слушатели на попапы
@@ -134,8 +136,9 @@ const cardListSection = new Section({
 api.getCards()
   .then(res => res.json())
   .then(res => {
+    console.log(res);
     cardListSection.renderItems(res.reverse());
-  })
+    })
 
 //слушатель на форму добавления карточки
 addPicButton.addEventListener('click', () => {

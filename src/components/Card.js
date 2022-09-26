@@ -3,6 +3,7 @@ export default class Card {
   constructor(data, templateSelector, {handleCardClick}) {
     this._name = data.name;
     this._link = data.link;
+    this._counter = data.likes.length;
     this._selector = templateSelector;
     this._handleCardClick = handleCardClick;
   }
@@ -24,6 +25,7 @@ export default class Card {
     this._setEventListeners();
 
     this._element.querySelector('.feed__element-pharagraph').textContent = this._name;
+    this._element.querySelector('.feed__element-counter').textContent = this._counter;
     this._cardPhoto.src = this._link;
     this._cardPhoto.alt = this._name;
 
