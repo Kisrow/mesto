@@ -47,4 +47,24 @@
       })
     });
   }
+
+  putLike(idCard) {
+    return fetch(`https://mesto.nomoreparties.co/v1/cohort-50/cards/${idCard}/likes`, {
+      method: 'PUT',
+      headers: {
+        authorization: 'fe432b22-c689-4f0c-8db5-8b9370263f9d',
+        'Content-Type': 'application/json'
+      }
+    })
+  }
+
+  deleteLike(idCard) {
+    return fetch(`https://mesto.nomoreparties.co/v1/cohort-50/cards/${idCard}/likes`, {
+      method: 'DELETE',
+      headers: {
+        authorization: 'fe432b22-c689-4f0c-8db5-8b9370263f9d',
+        'Content-Type': 'application/json'
+      }
+    })
+  }
 }

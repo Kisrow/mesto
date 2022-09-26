@@ -1,12 +1,5 @@
 import './index.css';
 
-// import karachasevsk from '../images/Karachayevsk.jpg';
-// import elbrus from '../images/Elbrus_view.jpg';
-// import nightDombai from '../images/Dombay_Night.jpg';
-// import karachasevsk2 from '../images/Karachayevsk_river.jpg'
-// import dombai from '../images/Dombay.jpg'
-// import nightElbrus from '../images/Elbrus_darktime.jpg'
-
 import Card from '../components/Card';
 import FormValidator from '../components/FormValidator.js';
 import Section from '../components/Section.js';
@@ -40,33 +33,6 @@ const addCardForm = addCardPopup.querySelector('.popup__forms');
 const userName = document.querySelector('.profile__name');
 const userAbout = document.querySelector('.profile__job');
 
-//массив с данными карточек
-// const initialCards = [
-//   {
-//     name: 'Карачаевск',
-//     link: karachasevsk
-//   },
-//   {
-//     name: 'Эльбрус',
-//     link: elbrus
-//   },
-//   {
-//     name: 'Ночной Домбай',
-//     link: nightDombai
-//   },
-//   {
-//     name: 'Карачаевск',
-//     link: karachasevsk2
-//   },
-//   {
-//     name: 'Домбай',
-//     link: dombai
-//   },
-//   {
-//     name: 'Вечерний Эльбрус',
-//     link: nightElbrus
-//   }
-// ];
 //экземпляр - работа с сервером
 const api = new Api('https://nomoreparties.co/v1/cohort-50/users/me');
 
@@ -118,6 +84,30 @@ popupWithImage.setEventListeners();
 const createCard = (data, templateSelector) => {
   const newCard = new Card(data, templateSelector, { handleCardClick: () => {
     popupWithImage.open(data);
+  },
+  handleLikeClick: (data, counter) => {
+    api.getUserInfo()
+    .then(res => res.json())
+    .then(res => {
+      let x = data.likes.some(item => {
+        return item._id === res._id;
+      })
+      if (x) {
+        api.deleteLike(data._id)
+          .then(res => res.json())
+          .then(res => {
+            counter -= 1;
+            console.log(res);
+          });
+      } else {
+        api.putLike(data._id)
+          .then(res => res.json())
+          .then(res => {
+            counter += 1;
+            console.log(res);
+          });
+      };
+    })
   }});
   const newCardElement = newCard.generateCard();
 
