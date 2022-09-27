@@ -5,7 +5,7 @@ import FormValidator from '../components/FormValidator.js';
 import Section from '../components/Section.js';
 import PopupWithImage from '../components/PopupWithImage.js';
 import PopupWithForm from '../components/PopupWithForm.js';
-// import UserInfo from '../components/UserInfo.js';
+import UserInfo from '../components/UserInfo.js';
 import Api from '../components/Api.js';
 
 const objectForValidate = {
@@ -36,20 +36,19 @@ const userAbout = document.querySelector('.profile__job');
 //экземпляр - работа с сервером
 const api = new Api('https://nomoreparties.co/v1/cohort-50/users/me');
 
-//получает имя и информацию пользователя и ставит на соответствующее место на странице
+//!получает имя и информацию пользователя и ставит на соответствующее место на странице
 api.getUserInfo()
   .then(res =>  res.json())
   .then(res => {
-    console.log(res);
     userName.textContent = res.name;
     userAbout.textContent = res.about;
   });
 
-//экземпляр - управлениет отображением информации о пользователе на странице
-// const userInfo = new UserInfo({
-//   nameSelector: '.profile__name',
-//   infoSelector: '.profile__job'
-// });
+//!экземпляр - управлениет отображением информации о пользователе на странице
+const userInfo = new UserInfo({
+  nameSelector: '.profile__name',
+  infoSelector: '.profile__job'
+});
 
 //экземпляр попап для просмотра фото
 const popupWithImage = new PopupWithImage('.viewer');
@@ -85,30 +84,16 @@ const createCard = (data, templateSelector) => {
   const newCard = new Card(data, templateSelector, { handleCardClick: () => {
     popupWithImage.open(data);
   },
-  handleLikeClick: (data, counter) => {
-    api.getUserInfo()
-    .then(res => res.json())
-    .then(res => {
-      let x = data.likes.some(item => {
-        return item._id === res._id;
-      })
-      if (x) {
-        api.deleteLike(data._id)
-          .then(res => res.json())
-          .then(res => {
-            counter -= 1;
-            console.log(res);
-          });
-      } else {
-        api.putLike(data._id)
-          .then(res => res.json())
-          .then(res => {
-            counter += 1;
-            console.log(res);
-          });
-      };
-    })
-  }});
+  putLike: (idCard) => {
+    api.putLike(idCard);
+  },
+  deleteLike: (idCard) => {
+    api.deleteLike(idCard);
+  },
+  // initialLikeStatus: () => {
+  //   api.get
+  // }
+});
   const newCardElement = newCard.generateCard();
 
   return newCardElement;
@@ -129,6 +114,7 @@ api.getCards()
     console.log(res);
     cardListSection.renderItems(res.reverse());
     })
+  .catch(err => console.log(`Ошибка ${err}`));
 
 //слушатель на форму добавления карточки
 addPicButton.addEventListener('click', () => {

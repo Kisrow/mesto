@@ -19,6 +19,14 @@
     });
   }
 
+  getCard(idCard) {
+    return fetch(`https://mesto.nomoreparties.co/v1/cohort-50/cards/${idCard}`, {
+      headers: {
+        authorization: 'fe432b22-c689-4f0c-8db5-8b9370263f9d'
+      }
+    });
+  }
+
   patchEditProfileInformation(inputValues) {
     return fetch('https://mesto.nomoreparties.co/v1/cohort-50/users/me', {
       method: 'PATCH',
