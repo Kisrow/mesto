@@ -14,7 +14,7 @@ export default class UserInfo {
   }
   //изменяет на странице имя и о себе на значения в массиве на входе
   setUserInfo(newUserData) {
-    this._userNameElement.textContent = newUserData.userName;
-    this._userInfoElement.textContent = newUserData.userInfo;
+    this._userNameElement.textContent = newUserData.name;
+    this._userInfoElement.textContent = newUserData.about;
   }
 }

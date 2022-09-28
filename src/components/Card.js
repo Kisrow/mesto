@@ -1,6 +1,6 @@
 // возвращает заполненную рабочую карточку
 export default class Card {
-  constructor(data, templateSelector, { handleCardClick, handleLikeClick, putLike, deleteLike }) {
+  constructor(data, templateSelector, { handleCardClick, putLike, deleteLike }) {
     this._name = data.name;
     this._link = data.link;
     this._counter = data.likes.length;
@@ -8,7 +8,6 @@ export default class Card {
     this._cardID = data._id;
     this._selector = templateSelector;
     this._handleCardClick = handleCardClick;
-    this._handleLikeClick = handleLikeClick;
     this._putLike = putLike;
     this._deleteLike = deleteLike;
   }
@@ -25,12 +24,13 @@ export default class Card {
   }
 
   //возращает заполненную карточку
-  generateCard() {
+  generateCard({ likeStatus }) {
     this._element = this._cloneCard();
+    this._counterElement = this._element.querySelector('.feed__element-counter');
     this._setEventListeners();
-
     this._element.querySelector('.feed__element-pharagraph').textContent = this._name;
-    this._element.querySelector('.feed__element-counter').textContent = this._counter;
+    this._counterElement.textContent = this._counter;
+    likeStatus(this._likeButton, this._infoList.likes);
     this._cardPhoto.src = this._link;
     this._cardPhoto.alt = this._name;
 
@@ -57,12 +57,9 @@ export default class Card {
   _like() {
     this._likeButton.classList.toggle('feed__element-like_active');
     if (this._element.querySelector('.feed__element-like_active')) {
-      this._element.querySelector('.feed__element-counter').textContent = this._counter + 1;
-      this._putLike(this._cardID)
-      console.log(this._cardID);
+      this._putLike(this._cardID, this._element.querySelector('.feed__element-counter'))
     } else {
-      this._element.querySelector('.feed__element-counter').textContent = this._counter;
-      this._deleteLike(this._cardID)
+      this._deleteLike(this._cardID, this._element.querySelector('.feed__element-counter'))
     }
 
   }

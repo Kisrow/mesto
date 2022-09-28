@@ -29,37 +29,33 @@ const editProfileForm = editProfilePopup.querySelector('.popup__forms');
 const addCardPopup = document.querySelector('.add-card');
 const addCardForm = addCardPopup.querySelector('.popup__forms');
 
-//элементы на странице содержащие имя и информацию пользователя
-const userName = document.querySelector('.profile__name');
-const userAbout = document.querySelector('.profile__job');
-
 //экземпляр - работа с сервером
 const api = new Api('https://nomoreparties.co/v1/cohort-50/users/me');
 
-//!получает имя и информацию пользователя и ставит на соответствующее место на странице
-api.getUserInfo()
-  .then(res =>  res.json())
-  .then(res => {
-    userName.textContent = res.name;
-    userAbout.textContent = res.about;
-  });
-
-//!экземпляр - управлениет отображением информации о пользователе на странице
+//экземпляр - управлениет отображением информации о пользователе на странице
 const userInfo = new UserInfo({
   nameSelector: '.profile__name',
   infoSelector: '.profile__job'
 });
 
+//при посещении страницы, запрос на сервер о пользователе, ставит из ответа имя и инфу "о себе"
+//можно в принципе удалить класс UserInfo и в запросе ставить пользовательскую информацию
+api.getUserInfo()
+  .then(res =>  res.json())
+  .then(res => {
+    userInfo.setUserInfo(res);
+  });
+
 //экземпляр попап для просмотра фото
 const popupWithImage = new PopupWithImage('.viewer');
 
-//экземпляр - попап с формой, меняет имя и общую инфу
+//экземпляр - попап с формой, отправляет на сервер инфу об измении пользовательской информации и ставит новую на странице
+//если класс UserInfo удалить, то также как при изначальной отрисовки имени и тд
 const popupWithFormProfile = new PopupWithForm({ handleFormSubmit: (inputValues) => {
   api.patchEditProfileInformation(inputValues)
     .then(res => res.json())
     .then(res => {
-      userName.textContent = res.name;
-      userAbout.textContent = res.about;
+      userInfo.setUserInfo(res);
     })
     .catch(err => console.log(`Ошибка ${err}`));
 }}, '.edit-profile');
@@ -69,7 +65,8 @@ const popupWithFormAddCard = new PopupWithForm({ handleFormSubmit: (inputValues)
   api.postNewCard({name: inputValues.nameCard, link: inputValues.link})
     .then(res => res.json())
     .then(res => {
-      cardListSection.renderItems([{name: res.name, link: res.link}]);
+      console.log(res);
+      cardListSection.renderItems([res]); //массив, т.к. изначально отрисованные карточки приходят с серва в виде массива и функция ориентирована на массив
     })
     .catch(err => console.log(`Ошибка ${err}`));
 }}, '.add-card');
@@ -84,17 +81,33 @@ const createCard = (data, templateSelector) => {
   const newCard = new Card(data, templateSelector, { handleCardClick: () => {
     popupWithImage.open(data);
   },
-  putLike: (idCard) => {
-    api.putLike(idCard);
+  putLike: (idCard, counter) => {
+    api.putLike(idCard, counter)
+      .then(res => res.json())
+      .then(res => {
+        counter.textContent = res.likes.length;
+      })
   },
-  deleteLike: (idCard) => {
-    api.deleteLike(idCard);
+  deleteLike: (idCard, counter) => {
+    api.deleteLike(idCard, counter)
+      .then(res => res.json())
+      .then(res => {
+        counter.textContent = res.likes.length;
+      })
   },
-  // initialLikeStatus: () => {
-  //   api.get
-  // }
 });
-  const newCardElement = newCard.generateCard();
+  const newCardElement = newCard.generateCard({likeStatus: (likeButton, userslike) => {
+    api.getUserInfo()
+      .then(res => res.json())
+      .then(res => {
+        let status = userslike.some(item => {
+          return  item._id === res._id;
+        })
+        if (status) {
+          likeButton.classList.add('feed__element-like_active')
+        }
+      })
+  }});
 
   return newCardElement;
 }
