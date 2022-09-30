@@ -46,7 +46,7 @@ export default class Card {
     });
     this._trashButton = this._element.querySelector('.feed__element-trash');
     this._trashButton.addEventListener('click', () => {
-      this._handleTrashClick(this._cardID);
+      this._handleTrashClick(this._cardID, this._element);
       // this._removeCard();
     });
     this._cardPhoto = this._element.querySelector('.feed__element-photo');

@@ -8,12 +8,13 @@ export default class PopupWithButton extends Popup {
     this._putSubmit = this._putSubmit.bind(this);
   }
 
-  transferCardinfo(cardID) {
+  transferCardinfo(cardID, cardElement) {
     this._cardID = cardID;
+    this._cardElement = cardElement;
   }
 
   _putSubmit() {
-    this._handleFormSubmit(this._cardID);
+    this._handleFormSubmit(this._cardID, this._cardElement);
     super.close();
   }
 

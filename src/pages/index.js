@@ -44,10 +44,18 @@ const userInfo = new UserInfo({
 });
 
 //экземпляр - подтверждает удаление карточки
-const popupWithButton = new PopupWithButton('.confirmation-delete', { handleFormSubmit: (cardID) => {
+const popupWithButton = new PopupWithButton('.confirmation-delete', { handleFormSubmit: (cardID, cardElement) => {
   api.deleteCard(cardID);
-  newCard._remove();
+  cardElement.remove();
 }});
+
+//экземпляр - отвечает за отрисовку
+const cardListSection = new Section({
+  renderer: item => {
+    const card = createCard(item, '.card-template_type_default');
+    cardListSection.addItem(card)
+  }
+},'.feed__elements');
 
 //при посещении страницы, запрос на сервер о пользователе, ставит из ответа имя и инфу "о себе"
 //можно в принципе удалить класс UserInfo и в запросе ставить пользовательскую информацию
@@ -107,9 +115,9 @@ const createCard = (data, templateSelector) => {
         counter.textContent = res.likes.length;
       })
   },
-  handleTrashClick: (cardID) => {
+  handleTrashClick: (cardID, cardElement) => {
     popupWithButton.open();
-    popupWithButton.transferCardinfo(cardID);
+    popupWithButton.transferCardinfo(cardID, cardElement);
   }
 });
 
@@ -129,13 +137,7 @@ const createCard = (data, templateSelector) => {
   return newCardElement;
 }
 
-//экземпляр - отвечает за отрисовку
-const cardListSection = new Section({
-  renderer: item => {
-    const card = createCard(item, '.card-template_type_default');
-    cardListSection.addItem(card)
-  }
-},'.feed__elements');
+
 
 //добавил исходные карточки с сервера
 api.getCards()
