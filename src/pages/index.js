@@ -7,6 +7,7 @@ import PopupWithImage from '../components/PopupWithImage.js';
 import PopupWithForm from '../components/PopupWithForm.js';
 import UserInfo from '../components/UserInfo.js';
 import Api from '../components/Api.js';
+import PopupWithButton from '../components/PopupWithButton.js';
 
 const objectForValidate = {
   formSelector: '.popup__forms', //контейнер с инпутами
@@ -29,6 +30,10 @@ const editProfileForm = editProfilePopup.querySelector('.popup__forms');
 const addCardPopup = document.querySelector('.add-card');
 const addCardForm = addCardPopup.querySelector('.popup__forms');
 
+//объявил окно подверждения удаления карточки
+const confirmationDeletePopup = document.querySelector('.confirmation-delete');
+const confirmationDeleteForm = confirmationDeletePopup.querySelector('.popup__forms');
+
 //экземпляр - работа с сервером
 const api = new Api('https://nomoreparties.co/v1/cohort-50/users/me');
 
@@ -37,6 +42,12 @@ const userInfo = new UserInfo({
   nameSelector: '.profile__name',
   infoSelector: '.profile__job'
 });
+
+//экземпляр - подтверждает удаление карточки
+const popupWithButton = new PopupWithButton('.confirmation-delete', { handleFormSubmit: (cardID) => {
+  api.deleteCard(cardID);
+  newCard._remove();
+}});
 
 //при посещении страницы, запрос на сервер о пользователе, ставит из ответа имя и инфу "о себе"
 //можно в принципе удалить класс UserInfo и в запросе ставить пользовательскую информацию
@@ -75,6 +86,7 @@ const popupWithFormAddCard = new PopupWithForm({ handleFormSubmit: (inputValues)
 popupWithFormProfile.setEventListeners();
 popupWithFormAddCard.setEventListeners();
 popupWithImage.setEventListeners();
+popupWithButton.setEventListeners();
 
 //Функция создания карточки по классу Card
 const createCard = (data, templateSelector) => {
@@ -95,7 +107,12 @@ const createCard = (data, templateSelector) => {
         counter.textContent = res.likes.length;
       })
   },
+  handleTrashClick: (cardID) => {
+    popupWithButton.open();
+    popupWithButton.transferCardinfo(cardID);
+  }
 });
+
   const newCardElement = newCard.generateCard({likeStatus: (likeButton, userslike) => {
     api.getUserInfo()
       .then(res => res.json())
@@ -146,3 +163,5 @@ const addCardPopupValidation = new FormValidator(objectForValidate, addCardForm)
 addCardPopupValidation.enableValidation();
 const editProfilePopupValidation = new FormValidator(objectForValidate, editProfileForm);
 editProfilePopupValidation.enableValidation();
+const confirmationDeletePopupValidation = new FormValidator(objectForValidate, confirmationDeleteForm);
+confirmationDeletePopupValidation.enableValidation();

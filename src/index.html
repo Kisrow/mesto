@@ -78,6 +78,17 @@
       </div>
       <div class="viewer-overlay popup__overlay"></div>
     </div>
+    <div class="popup confirmation-delete">
+      <div class="popup__container">
+        <button aria-label="закрыть всплывающее окно"
+        class="popup__exit" type="button"></button>
+        <h2 class="popup__paragraph">Вы уверены?</h2>
+        <form class="popup__forms" name="popup_form" novalidate>
+          <button class="popup__button" type="submit">Да</button>
+        </form>
+        <div class="add-card-overlay popup__overlay"></div>
+      </div>
+    </div>
      <!--* код для копирования карточки через JS-->
      <template id = "feed-element" class="card-template_type_default">
       <li class="feed__element">

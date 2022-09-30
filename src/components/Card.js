@@ -1,6 +1,6 @@
 // возвращает заполненную рабочую карточку
 export default class Card {
-  constructor(data, templateSelector, { handleCardClick, putLike, deleteLike }) {
+  constructor(data, templateSelector, { handleCardClick, putLike, deleteLike, handleTrashClick }) {
     this._name = data.name;
     this._link = data.link;
     this._counter = data.likes.length;
@@ -10,6 +10,7 @@ export default class Card {
     this._handleCardClick = handleCardClick;
     this._putLike = putLike;
     this._deleteLike = deleteLike;
+    this._handleTrashClick = handleTrashClick;
   }
 
   //возвращает разметку карточки
@@ -45,7 +46,8 @@ export default class Card {
     });
     this._trashButton = this._element.querySelector('.feed__element-trash');
     this._trashButton.addEventListener('click', () => {
-      this._removeCard();
+      this._handleTrashClick(this._cardID);
+      // this._removeCard();
     });
     this._cardPhoto = this._element.querySelector('.feed__element-photo');
     this._cardPhoto.addEventListener('click', () => {
