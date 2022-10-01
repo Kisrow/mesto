@@ -8,7 +8,8 @@
       headers: {
         authorization: 'fe432b22-c689-4f0c-8db5-8b9370263f9d'
       }
-    });
+    })
+    .then(res => res.json())
   }
 
   getCards() {
@@ -16,7 +17,8 @@
       headers: {
         authorization: 'fe432b22-c689-4f0c-8db5-8b9370263f9d'
       }
-    });
+    })
+    .then(res => res.json())
   }
 
   patchEditProfileInformation(inputValues) {
@@ -30,7 +32,8 @@
         name: inputValues.name,
         about: inputValues.job
       })
-    });
+    })
+    .then(res => res.json())
   }
 
   //Если запрос прошёл успешно, сервер вернёт ответ с объектом новой карточки
@@ -45,7 +48,8 @@
         name: inputValues.name,
         link: inputValues.link
       })
-    });
+    })
+    .then(res => res.json())
   }
 
   putLike(idCard) {
@@ -56,6 +60,7 @@
         'Content-Type': 'application/json'
       }
     })
+    .then(res => res.json())
   }
 
   deleteLike(idCard) {
@@ -66,6 +71,7 @@
         'Content-Type': 'application/json'
       }
     })
+    .then(res => res.json())
   }
 
   deleteCard(idCard) {
@@ -76,6 +82,21 @@
         'Content-Type': 'application/json'
       }
     })
+    .then(res => res.json())
   }
 
+  //смена аватара
+  patchAvatarProfile(inputValues) {
+    return fetch('https://mesto.nomoreparties.co/v1/cohort-50/users/me/avatar', {
+      method: 'PATCH',
+      headers: {
+        authorization: 'fe432b22-c689-4f0c-8db5-8b9370263f9d',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        avatar: inputValues.link
+      })
+    })
+    .then(res => res.json())
+  }
 }

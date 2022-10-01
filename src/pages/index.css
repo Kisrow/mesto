@@ -13,6 +13,7 @@
 @import url(../blocks/profile/__job/profile__job.css);
 @import url(../blocks/profile/__info-editor/profile__info-editor.css);
 @import url(../blocks/profile/__add-button/profile__add-button.css);
+@import url(../blocks/profile/__avatar-edit/profile__avatar-edite.css);
 /* popup */
 @import url(../blocks/popup/popup.css);
 @import url(../blocks/popup/__container/popup__container.css);

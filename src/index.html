@@ -18,7 +18,9 @@
       <section class="profile">
         <img class="profile__avatar" src="<%=require('./images/profile-image.jpg')%>"
           alt="извините, браузер не выдержал всю мощь вашей фотографии">
-        <div>
+        <button aria-label="редактирование информации профиля"
+          class="profile__avatar-edite" type="button"></button>
+          <div>
           <div class="profile__info">
             <h1 class="profile__name"></h1>
             <button aria-label="редактирование информации профиля"
@@ -85,6 +87,19 @@
         <h2 class="popup__paragraph">Вы уверены?</h2>
         <form class="popup__forms" name="popup_form" novalidate>
           <button class="popup__button" type="submit">Да</button>
+        </form>
+        <div class="add-card-overlay popup__overlay"></div>
+      </div>
+    </div>
+    <div class="popup change-avatar">
+      <div class="popup__container">
+        <button aria-label="закрыть всплывающее окно"
+        class="popup__exit" type="button"></button>
+        <h2 class="popup__paragraph">Обновить аватар</h2>
+        <form class="popup__forms" name="popup_form" novalidate>
+          <input class="popup__input" id="avatar-link-input" placeholder="Введите ссылку на картинку" type="url" name="link" required>
+          <span class="avatar-link-input-error popup__input-error"></span>
+          <button class="popup__button" type="submit">Создать</button>
         </form>
         <div class="add-card-overlay popup__overlay"></div>
       </div>
