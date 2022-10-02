@@ -7,10 +7,6 @@ export default class PopupWithButton extends Popup {
     this._handleFormSubmit = handleFormSubmit;
   }
 
-  open(){
-    super.open();
-  }
-
   submitDel(action) {
     this._action = action;
   }

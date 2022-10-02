@@ -58,22 +58,8 @@ const userInfo = new UserInfo({
   avatar: '.profile__avatar'
 });
 
-//при посещении страницы, запрос на сервер о пользователе, ставит из ответа имя и инфу "о себе"
-//можно в принципе удалить класс UserInfo и в запросе ставить пользовательскую информацию
-// api.getUserInfo()
-//   .then(res => {
-//     userInfo.setUserInfo(res);
-//   });
-
 //экземпляр - подтверждает удаление карточки
 const popupWithButton = new PopupWithButton('.confirmation-delete', { handleFormSubmit: (cardId, cardElement) => {
-  // api.deleteCard(cardId)
-  //   .then(res => {
-  //     console.log(res);
-  //     cardElement.remove();
-  //   })
-    // .catch(err => console.log(`Ошибка ${err}`));
-  // cardElement.remove();
 }});
 
 //экземпляр попап для просмотра фото
@@ -164,8 +150,6 @@ const popupWithFormAddCard = new PopupWithForm({ handleFormSubmit: (inputValues)
     .then(res => {
       const newUserCard = createCard(res, '.card-template_type_default', res.owner._id);
       cardListSection.addUserItem(newUserCard);
-      // createCard(res, '.card-template_type_default')
-      // cardListSection.renderItems([res]); //массив, т.к. изначально отрисованные карточки приходят с серва в виде массива и функция ориентирована на массив
     })
     .catch(err => console.log(`Ошибка ${err}`))
     .finally(() => {
@@ -190,40 +174,7 @@ cardAddPopupValidation.enableValidation();
 Promise.all([api.getUserInfo(), api.getCards()])
   .then(([userData, cards]) => {
     userInfo.setUserInfo(userData);
-    // const cardListSection = new Section({
-    //   renderer: item => {
-    //     const card = createCard(item, '.card-template_type_default', userData);
-    //     cardListSection.addItem(card);
-    // }}, '.feed__elements');
-
     cardListSection.renderItems(cards, userData._id);
-
-  // //экземпляр - попап с формой, который добавляет новую карточку
-  // const popupWithFormAddCard = new PopupWithForm({ handleFormSubmit: (inputValues) => {
-  //   popupWithFormAddCard.renderLoading(true);
-  //   api.postNewCard({name: inputValues.nameCard, link: inputValues.link})
-  //     .then(res => {
-  //       cardListSection.renderItems([res]); //массив, т.к. изначально отрисованные карточки приходят с серва в виде массива и функция ориентирована на массив
-  //     })
-  //     .catch(err => console.log(`Ошибка ${err}`))
-  //     .finally(() => {
-  //       popupWithFormAddCard.renderLoading(false, 'Создать');
-  //     });
-  // }}, '.add-card');
-
-  // //слушатель на форму добавления карточки
-  // buttonAddPic.addEventListener('click', () => {
-  //   cardAddPopupValidation.disableButton();
-  //   popupWithFormAddCard.open();
-  // });
-
-  // //ставит слушатели
-  // popupWithFormAddCard.setEventListeners();
-
-  // //экземпляр и инициализация валидации формы попапа добавления новой карточки
-  // //из-за области видимости внутри промиса
-  // const cardAddPopupValidation = new FormValidator(objectForValidate, cardAddPopupForm);
-  // cardAddPopupValidation.enableValidation();
   })
   .catch(err => console.log(`Ошибка ${err}`));
 
@@ -235,6 +186,7 @@ buttonEditProfile.addEventListener('click', () => {
   profileEditPopupValidation.disableButton();
   popupWithFormProfile.open();
 });
+
 //слушатель на аватар
 avatar.addEventListener('click', () => {
   avatarPopupValidation.disableButton();

@@ -5,8 +5,6 @@ export default class Card {
     this._cardDate = cardDate;
     this._selector = templateSelector;
     this._handleCardClick = handleCardClick;
-    // this._putLike = putLike;
-    // this._deleteLike = deleteLike;
     this._handleTrashClick = handleTrashClick;
     this._toggleLike = toggleLike;
     this._userDataId = userDataId;
@@ -87,21 +85,9 @@ export default class Card {
     })
   }
 
-  //ставит или убирает лайк на фото при нажатии на сердце
-  // _like() {
-  //   this._likeButton.classList.toggle('feed__element-like_active');
-  //   if (this._element.querySelector('.feed__element-like_active')) {
-  //     this._putLike(this._cardDate._id, this._element.querySelector('.feed__element-counter'))
-  //   } else {
-  //     this._deleteLike(this._cardDate._id, this._element.querySelector('.feed__element-counter'))
-  //   }
-
-  // }
-
   //удаляет карточку при нажатие на мусорку
   _removeCard() {
     this._element.remove();
     this._element = null; //remove удаляет только разметку из html, объект карточки остается в памяти приложения и потребляет ресурсы - зануляем
   }
-
 }
