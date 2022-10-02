@@ -5,23 +5,21 @@ export default class PopupWithButton extends Popup {
     super(popupSelector);
     this._form = this._popup.querySelector('.popup__forms');
     this._handleFormSubmit = handleFormSubmit;
-    this._putSubmit = this._putSubmit.bind(this);
   }
 
-  transferCardinfo(cardID, cardElement) {
-    this._cardID = cardID;
-    this._cardElement = cardElement;
+  open(){
+    super.open();
   }
 
-  _putSubmit() {
-    this._handleFormSubmit(this._cardID, this._cardElement);
-    super.close();
+  submitDel(action) {
+    this._action = action;
   }
 
   setEventListeners() {
     super.setEventListeners();
     this._form.addEventListener('submit', () => {
-      this._putSubmit();
+      this._action();
     })
   }
+
 }

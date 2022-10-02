@@ -1,31 +1,38 @@
   export default class Api {
-  constructor(url) {
-    this._url = url;
+  constructor(config) {
+    this._userToken = config.userToken;
+    this._url = config.url;
+  }
+
+  _chekResponse(res) {
+    if (res.ok) {
+      return res.json();
+    } else
+    return Promise.reject(`Ошибка ${res.status}`);
   }
 
   getUserInfo() {
-    return fetch(this._url, {
+    return fetch(`${this._url}/users/me`, {
       headers: {
-        authorization: 'fe432b22-c689-4f0c-8db5-8b9370263f9d'
+        authorization: this._userToken
       }
     })
-    .then(res => res.json())
-  }
+    .then(this._chekResponse)  }
 
   getCards() {
-    return fetch('https://mesto.nomoreparties.co/v1/cohort-50/cards', {
+    return fetch(`${this._url}/cards`, {
       headers: {
-        authorization: 'fe432b22-c689-4f0c-8db5-8b9370263f9d'
+        authorization: this._userToken
       }
     })
-    .then(res => res.json())
+    .then(this._chekResponse)
   }
 
   patchEditProfileInformation(inputValues) {
-    return fetch('https://mesto.nomoreparties.co/v1/cohort-50/users/me', {
+    return fetch(`${this._url}/users/me`, {
       method: 'PATCH',
       headers: {
-        authorization: 'fe432b22-c689-4f0c-8db5-8b9370263f9d',
+        authorization: this._userToken,
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({
@@ -33,15 +40,15 @@
         about: inputValues.job
       })
     })
-    .then(res => res.json())
+    .then(this._chekResponse)
   }
 
   //Если запрос прошёл успешно, сервер вернёт ответ с объектом новой карточки
   postNewCard(inputValues) {
-    return fetch('https://mesto.nomoreparties.co/v1/cohort-50/cards', {
+    return fetch(`${this._url}/cards`, {
       method: 'POST',
       headers: {
-        authorization: 'fe432b22-c689-4f0c-8db5-8b9370263f9d',
+        authorization: this._userToken,
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({
@@ -49,54 +56,54 @@
         link: inputValues.link
       })
     })
-    .then(res => res.json())
+    .then(this._chekResponse)
   }
 
   putLike(idCard) {
-    return fetch(`https://mesto.nomoreparties.co/v1/cohort-50/cards/${idCard}/likes`, {
+    return fetch(`${this._url}/cards/${idCard}/likes`, {
       method: 'PUT',
       headers: {
-        authorization: 'fe432b22-c689-4f0c-8db5-8b9370263f9d',
+        authorization: this._userToken,
         'Content-Type': 'application/json'
       }
     })
-    .then(res => res.json())
+    .then(this._chekResponse)
   }
 
   deleteLike(idCard) {
-    return fetch(`https://mesto.nomoreparties.co/v1/cohort-50/cards/${idCard}/likes`, {
+    return fetch(`${this._url}/cards/${idCard}/likes`, {
       method: 'DELETE',
       headers: {
-        authorization: 'fe432b22-c689-4f0c-8db5-8b9370263f9d',
+        authorization: this._userToken,
         'Content-Type': 'application/json'
       }
     })
-    .then(res => res.json())
+    .then(this._chekResponse)
   }
 
   deleteCard(idCard) {
-    return fetch(`https://mesto.nomoreparties.co/v1/cohort-50/cards/${idCard}`, {
+    return fetch(`${this._url}/cards/${idCard}`, {
       method: 'DELETE',
       headers: {
-        authorization: 'fe432b22-c689-4f0c-8db5-8b9370263f9d',
+        authorization: this._userToken,
         'Content-Type': 'application/json'
       }
     })
-    .then(res => res.json())
+    .then(this._chekResponse)
   }
 
   //смена аватара
   patchAvatarProfile(inputValues) {
-    return fetch('https://mesto.nomoreparties.co/v1/cohort-50/users/me/avatar', {
+    return fetch(`${this._url}/users/me/avatar`, {
       method: 'PATCH',
       headers: {
-        authorization: 'fe432b22-c689-4f0c-8db5-8b9370263f9d',
+        authorization: this._userToken,
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({
         avatar: inputValues.link
       })
     })
-    .then(res => res.json())
+    .then(this._chekResponse)
   }
 }

@@ -10,12 +10,16 @@ export default class Section {
 
   //отрисовывает указанный элемент
   addItem(element) {
+    this._container.append(element);
+  }
+
+  addUserItem(element) {
     this._container.prepend(element);
   }
 
-  renderItems(array) {
+  renderItems(array, userDataId) {
     array.forEach(item => {
-      this._renderer(item);
+      this._renderer(item, userDataId);
     });
   }
 
