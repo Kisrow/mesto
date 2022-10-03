@@ -99,22 +99,21 @@ popupWithButton.setEventListeners();
 popupWithFormAvatar.setEventListeners();
 
 //?функция создания карточки
-function createCard(cardDate, templateSelector, userDataId) {
-  const newCard = new Card(cardDate, templateSelector, userDataId, { handleCardClick: () => {
-    popupWithImage.open(cardDate);
+function createCard(cardData, templateSelector, userDataId) {
+  const newCard = new Card(cardData, templateSelector, userDataId, { handleCardClick: () => {
+    popupWithImage.open(cardData);
   },
-  toggleLike: (cardDate) => {
-    // console.log(newCard.checkIsLiked(cardDate));
-    if (newCard.checkIsLiked(cardDate)) {
-      api.deleteLike(cardDate._id)
+  toggleLike: (cardData) => {
+    if (newCard.checkIsLiked()) {
+      api.deleteLike(cardData._id)
         .then(res => {
-          newCard.like(res, false);
+          newCard.like(res);
         })
         .catch(err => console.log(`Ошибка ${err}`));
     } else {
-      api.putLike(cardDate._id)
+      api.putLike(cardData._id)
         .then(res => {
-          newCard.like(res, true);
+          newCard.like(res);
         })
         .catch(err => console.log(`Ошибка ${err}`));
     }
@@ -175,6 +174,7 @@ Promise.all([api.getUserInfo(), api.getCards()])
   .then(([userData, cards]) => {
     userInfo.setUserInfo(userData);
     cardListSection.renderItems(cards, userData._id);
+    console.log(cards)
   })
   .catch(err => console.log(`Ошибка ${err}`));
 
